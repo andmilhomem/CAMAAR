@@ -6,15 +6,16 @@ Funcionalidade: Importar dados do SIGAA
     A fim de alimentar a base de dados do sistema
 
     Contexto:
-        Dado que eu tenho perfil de Administrador
-        E que eu estou na página "Gerenciamento"
+        Dado que estou logado como administrador
+        E que estou na página "Gerenciamento"
+        E que ainda não existem turmas, matérias e participantes cadastrados
 
-    Cenário: importação bem sucedida (happy path)
-        Dado que ainda não existem turmas, matérias e participantes cadastrados
-        Quando eu clico em "Importar dados"
-        Então eu vejo a mensagem "Dados importados com sucesso!"
+    Cenário: Importação bem-sucedida
+        Dado que os dados estão disponíveis para importação
+        Quando clico no botão "Importar dados"
+        Então devo ver a mensagem "Dados importados com sucesso!"
 
-    Cenário: dados já criados (sad path)
-        Dado que já existem turmas, matérias e participantes cadastrados
-        Quando eu clico em "Importar dados"
-        Então eu vejo a mensagem "Dados já importados anteriormente!"
+    Cenário: Dados indisponíveis
+        Dado que os dados não estão disponíveis para importação
+        Quando clico no botão "Importar dados"
+        Então devo ver a mensagem "Dados indisponíveis no momento! Tente novamente mais tarde ou entre em contato com o suporte técnico."

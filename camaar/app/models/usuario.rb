@@ -1,4 +1,5 @@
 class Usuario < ApplicationRecord
+  has_secure_password
   has_and_belongs_to_many :formularios
   has_and_belongs_to_many :turmas
   validates :nome, presence: true

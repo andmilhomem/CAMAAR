@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # rota de exemplo para testar se cucumber está funcionando
@@ -7,6 +8,27 @@ Rails.application.routes.draw do
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
+
+  # Rotas relacionadas à manipulação direta de recursos
+  resources :formularios, only: [:index, :new, :create] # Usar index para listar formulários não respondidos (parâmetro usuario_id) e listar formularios com resposta (sem parâmetro)
+  resources :resposta_formularios, only: [:index, :new, :create] # Usar index para gerar CSV com todos os resultados de um formulário (passar formulario_id como parâmetro)
+  resources :templates, only: [:index, :new, :create, :edit, :update, :destroy]
+
+  # Define a página inicial
+  root "formularios#index"
+
+  # Rotas relacionadas ao login
+  get     "/login",   to: "sessoes#new",     as: :login
+  post    "/login",   to: "sessoes#create"
+  delete  "/logout",  to: "sessoes#destroy", as: :logout
+  
+  # Rotas relacionadas à redefinação de senha
+  get    "/senha/redefinir", to: "senhas#new",    as: :nova_senha
+  post   "/senha/redefinir", to: "senhas#create", as: :redefinir_senha
+
+  # Rotas relacionadas ao administrador
+  get   "/admin",                 to: "admin#index",    as: admin
+  post  "/admin/importar_dados",  to: "admin#importar_dados", as: importar_dados
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

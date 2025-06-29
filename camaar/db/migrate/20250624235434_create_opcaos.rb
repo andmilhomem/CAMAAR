@@ -6,7 +6,6 @@ class CreateOpcaos < ActiveRecord::Migration[8.0]
 
       t.references :questao, null: false, foreign_key: true
 
-
       t.timestamps
     end
   end

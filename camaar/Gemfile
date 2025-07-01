@@ -68,4 +68,5 @@ group :development, :test do
   gem "rspec-rails"
   gem "cucumber-rails", require: false
   gem "database_cleaner-active_record"
+  gem 'rack_session_access' # Permite manipular session no BDD
 end

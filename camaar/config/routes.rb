@@ -27,8 +27,8 @@ Rails.application.routes.draw do
   post   "/senha/redefinir", to: "senhas#create", as: :redefinir_senha
 
   # Rotas relacionadas ao administrador
-  get   "/admin",                 to: "admin#index",    as: admin
-  post  "/admin/importar_dados",  to: "admin#importar_dados", as: importar_dados
+  get   "/admin",                 to: "admin#index",    as: :admin
+  post  "/admin/importar_dados",  to: "admin#importar_dados", as: :importar_dados
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

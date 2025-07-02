@@ -18,14 +18,14 @@ Funcionalidade: Sistema de definição de senha
 
     Cenário: Usuário preenche a senha de forma inválida
         Quando preencho o campo "Senha" com o valor "123456"
-        E preencho o campo "Confirme a senha" com o mesmo valor do campo "123456"
+        E preencho o campo "Confirme a senha" com o valor "123456"
         E clico no botão "Alterar senha"
         Então devo ir para a página "Avaliações"
         E devo ver a mensagem "Formato de senha inválido!"
 
     Cenário: Senhas diferentes
         Quando preencho o campo "Senha" com o valor "12ABcd$$"
-        Mas preencho o campo "Confirme a senha" com valor "12abCD$$"
+        Mas preencho o campo "Confirme a senha" com o valor "12abCD$$"
         E clico no botão "Alterar senha"
         Então devo ver a mensagem "Senhas diferentes!"
   

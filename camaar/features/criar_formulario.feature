@@ -8,12 +8,12 @@ Funcionalidade: Criar formulário de avaliação
     Contexto:
         Dado que estou logado como administrador
         E que estou na página "Gerenciamento"
-        Quando clico no botão "Enviar Formulários"
 
     Cenário: Templates e turmas disponíveis e selecionados
         Dado que existe uma turma "BANCO DE DADOS"
         E que existe um template "Avaliação Discente 1"
-        Quando seleciono a opção "Avaliação Discente 1" no campo "Template"
+        Quando clico no botão "Enviar Formulários"
+        E seleciono a opção "Avaliação Discente 1" na caixa "Template"
         E seleciono a opção de turma "BANCO DE DADOS"
         E clico no botão "Enviar"
         Então devo ver a mensagem "Formulário(s) criado(s) com sucesso!"
@@ -22,7 +22,8 @@ Funcionalidade: Criar formulário de avaliação
     Cenário: Templates e turmas disponíveis e informações incompletas
         Dado que existe uma turma "BANCO DE DADOS"
         E que existe um template "Avaliação Discente 1"
-        Quando seleciono a opção "Avaliação Discente 1" no campo "Template"
+        Quando clico no botão "Enviar Formulários"
+        E seleciono a opção "Avaliação Discente 1" na caixa "Template"
         E clico no botão "Enviar"
         Então devo ver a mensagem "Preencha todas as informações necessárias!"
 

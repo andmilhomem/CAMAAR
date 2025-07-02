@@ -8,20 +8,18 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
 
-    when /^the (RottenPotatoes )?home\s?page$/ then '/movies'
-    when /^the movies page$/ then '/movies'
+    when "Gerenciamento" then admin_path
+    when "Login" then login_path
+    when "Redefinição de senha" then nova_senha_path
+    when "Avaliações" then formularios_path
+    when "Gerenciamento - Resultados" then resposta_formularios_path
+    when "Gerenciamento - Templates" then templates_path
 
     else
-      begin
-        page_name =~ /^the (.*) page$/
-        path_components = ::Regexp.last_match(1).split(/\s+/)
-        send(path_components.push('path').join('_').to_sym)
-      rescue NoMethodError, ArgumentError
-        raise "Can't find mapping from \"#{page_name}\" to a path.\n" \
-              "Now, go and add a mapping in #{__FILE__}"
-      end
+      raise "Não foi possível mapear a página \"#{page_name}\" a um caminho. Altere o arquivo features/support/paths.rb!\n"
     end
   end
+
 end
 
 World(NavigationHelpers)

@@ -9,12 +9,12 @@ Funcionalidade: Responder formulário
         Dado que estou logado como participante
         E que estou matriculado na turma "BANCO DE DADOS"
         E que estou na página "Avaliações"
-        E que existe um formulário não respondido na turma "BANCO DE DADOS" com uma questão do tipo "Texto" e outra do tipo "Radio" com duas opções ("Sim" e "Não")
-        Quando clico no formulário "BANCO DE DADOS"
+        E que existe um formulário não respondido na turma "BANCO DE DADOS" com uma questão do tipo "Texto" e outra do tipo "Radio" com duas opções, "Sim" e "Não"
+        Quando clico no formulário da turma "BANCO DE DADOS"
 
     Cenário: Enviar formulário preenchido com sucesso
-        Quando preencho o campo de resposta da primeira questão com o "Lorem ipsum"
-        E seleciono a opção "Não" da segunda questão
+        Quando informo o valor "Lorem ipsum" dentro de "Questão 1"
+        E seleciono a opção "Não" dentro de "Questão 2"
         E clico no botão "Enviar"
         Então devo ver a mensagem "Resposta enviada com sucesso!"
 

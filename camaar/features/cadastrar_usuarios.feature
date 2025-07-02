@@ -8,7 +8,7 @@ Funcionalidade: Cadastrar usuários do sistema
     Cenário: Redefinição de senha a partir da tela de login
         Dado que estou na página "Login"
         Quando preencho o campo "Email" com um e-mail de usuário novo
-        E preencho o campo "Senha" com a senha provisória correspondente a esse usuário
+        E preencho o campo "Senha" com a senha correspondente a esse usuário
         E clico no botão "Entrar"
         Então devo ir para a página "Redefinição de senha"
     

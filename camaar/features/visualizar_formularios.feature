@@ -15,5 +15,5 @@ Funcionalidade: Visualização de formulários para responder
         Então devo ver o formulário da turma "BANCO DE DADOS"
 
     Cenário: Nenhum formulário disponível
-        Dado que já respondi o formulário da turma "BANCO DE DADOS"
-        Então devo ver a "Nenhum formulário disponível para resposta"
+        Dado que existe apenas o formulário da turma "BANCO DE DADOS", já respondido
+        Então devo ver a mensagem "Nenhum formulário disponível para resposta"

@@ -9,17 +9,19 @@ Funcionalidade: Sistema de login
         Dado que estou na página "Login"
 
     Cenário: Usuário cadastrado
-        Quando preencho o campo "E-mail" com um e-mail correspondente a um usuário cadastrado e preencho o campo "Senha" com a senha correspondente a esse usuário
+        Quando preencho o campo "Email" com um e-mail correspondente a um usuário cadastrado
+        E preencho o campo "Senha" com a senha correspondente a esse usuário
         E clico no botão "Entrar"
         Então devo ir para a página "Avaliações"
 
     Cenário: Usuário não cadastrado
-        Quando preencho o campo "E-mail" com um e-mail não correspondente a um usuário cadastrado
+        Quando preencho o campo "Email" com um e-mail não correspondente a um usuário cadastrado
         E clico no botão "Entrar"
         Então devo ver a mensagem "Usuário ou Senha Inválidos"
     
     Cenário: Senha incorreta
-        Quando preencho o campo "E-mail" com um e-mail correspondente a um usuário cadastrado, mas preencho o campo "Senha" com senha não correspondente a esse usuário
+        Quando preencho o campo "Email" com um e-mail correspondente a um usuário cadastrado
+        Mas preencho o campo "Senha" com senha não correspondente a esse usuário
         E clico no botão "Entrar"
         Então devo ver a mensagem "Usuário ou Senha Inválidos"
         

@@ -3,3 +3,5 @@ import "@hotwired/turbo-rails"
 import "controllers"
 
 import "scripts/botao"
+import "./scripts/valida_resposta"
+import "./scripts/flash_toast"

@@ -11,4 +11,5 @@ class Usuario < ApplicationRecord
   validates :esta_ativo, presence: true
   validates :password_digest, presence: true
   validates :matricula, uniqueness: true
+  has_many :resposta_formularios
 end

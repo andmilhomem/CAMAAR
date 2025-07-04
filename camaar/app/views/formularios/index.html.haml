@@ -1,2 +1,10 @@
-%h1 Formularios#index
-%p Find me in app/views/formularios/index.html.haml
+%h1 Avaliações
+
+- if @tem_formularios
+  - @formularios.each do |formulario|
+    %div.card-formulario{ data: { turma_codigo: formulario.turma.codigo } }
+      %p= "Formulário de: #{formulario.turma.disciplina.nome}"
+      %p= "Turma: #{formulario.turma.codigo} (Semestre #{formulario.turma.semestre})"
+      = link_to "Responder", new_resposta_formulario_path(formulario_id: formulario.id)
+- else
+  %p Nenhum formulário disponível para resposta

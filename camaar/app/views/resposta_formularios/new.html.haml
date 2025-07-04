@@ -1,2 +1,27 @@
-%h1 RespostaFormularios#new
-%p Find me in app/views/resposta_formularios/new.html.haml
+.container
+  %h1 Responder formulário
+
+  = form_with url: resposta_formularios_path,
+              method: :post,
+              local: true,
+              html: { id: "resposta-form" } do
+    = hidden_field_tag :formulario_id, @formulario.id
+
+    - @questaos.each_with_index do |questao, i|
+      .questao{ data: { id: questao.id } }
+        %p Questão #{i+1}: #{questao.enunciado}
+
+        - if questao.tipo == "Texto"
+          = text_area_tag "respostas[#{questao.id}]", nil,
+                          id: "resposta_#{questao.id}", rows: 4
+
+        - elsif questao.tipo == "Radio"
+          .opcoes
+            - questao.opcaos.each do |opcao|
+              %label.opcao{ for: "resposta_#{questao.id}_#{opcao.id}" }
+                = radio_button_tag "respostas[#{questao.id}]", opcao.id, false,
+                                   id: "resposta_#{questao.id}_#{opcao.id}"
+                = opcao.texto_opcao
+
+    .actions
+      = submit_tag "Enviar", class: "botao-enviar"

@@ -8,6 +8,13 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .modal {
   display: none;
   position: fixed;
@@ -27,4 +34,162 @@
   border-radius: 8px;
   max-width: 400px;
   width: 90%;
+}
+
+/* Container central */
+.container {
+  max-width: 550px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+/* Título */
+.container h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.25rem;
+  font-weight: 600;
+}
+
+/* Card de cada questão */
+.questao {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.75rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  position: relative;
+}
+
+/* Enunciado */
+.questao-enunciado {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: #222;
+}
+
+/* Textarea centralizado e responsivo */
+.questao textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 6px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.questao textarea:focus {
+  border-color: #0052cc;
+  outline: none;
+}
+
+/* Opções de rádio agrupadas */
+.opcoes {
+  display: flex;
+  flex-direction: column;
+}
+
+.opcao {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.975rem;
+  color: #333;
+}
+
+/* Radio estilizado */
+.opcao input[type="radio"] {
+  appearance: none;
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid #0052cc;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  position: relative;
+  cursor: pointer;
+}
+
+.opcao input[type="radio"]:checked::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #0052cc;
+  border-radius: 50%;
+}
+
+/* Botão de enviar */
+.botao-enviar {
+  display: block;
+  width: 100%;
+  background-color: #0052cc;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  padding: 0.85rem 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.botao-enviar:hover {
+  background-color: #003d99;
+}
+
+.botao-enviar:active {
+  transform: scale(0.98);
+}
+
+.erro-validacao {
+  color: #c00;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.toast {
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.75rem 1.25rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  font-size: 0.95rem;
+  /* animação: delay de 3.5s, duração 0.5s, ease, mantém estado final */
+  animation: fadeOut 0.5s ease 3.5s forwards;
+  opacity: 1; /* garante ponto de partida */
+}
+
+.toast[data-flash-type="notice"] {
+  border-left: 4px solid #0052cc;
+}
+
+.toast[data-flash-type="alert"] {
+  border-left: 4px solid #c00;
+}
+
+/* keyframes que fazem o fade-out */
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    /* Se quiser, também pode colapsar o espaço:
+       height: 0;
+       margin: 0;
+       padding-top: 0;
+       padding-bottom: 0;
+    */
+  }
 }

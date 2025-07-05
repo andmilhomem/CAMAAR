@@ -1,10 +1,18 @@
-%h1 Avaliações
+%h1 Avaliações pendentes
 
 - if @tem_formularios
-  - @formularios.each do |formulario|
-    %div.card-formulario{ data: { turma_codigo: formulario.turma.codigo } }
-      %p= "Formulário de: #{formulario.turma.disciplina.nome}"
-      %p= "Turma: #{formulario.turma.codigo} (Semestre #{formulario.turma.semestre})"
-      = link_to "Responder", new_resposta_formulario_path(formulario_id: formulario.id)
+  .lista-formularios
+    - @formularios.each do |form|
+      .card-formulario
+        .card-header
+          %h2= form.turma.disciplina.nome
+        .card-body
+          %p
+            %strong Turma:
+            = " #{form.turma.codigo} (#{form.turma.semestre})"
+        .card-footer
+          = link_to "Responder", new_resposta_formulario_path(formulario_id: form.id),
+                    class: "botao-responder"
 - else
-  %p Nenhum formulário disponível para resposta
+  .empty-state
+    %p Nenhum formulário disponível para resposta

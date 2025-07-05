@@ -1,27 +1,44 @@
 require 'rails_helper'
 
 RSpec.describe "Formularios", type: :request do
+  let!(:usuario)    { create(:usuario, :admin, password: "Senh@123", password_confirmation: "Senh@123") }
+  let!(:disciplina) { create(:disciplina) }
+  let!(:turma)      { create(:turma, disciplina: disciplina) }
+
+  before do
+    # faz login "real" para popular session[:usuario_id]
+    post login_path, params: { email: usuario.email, senha: "Senh@123" }
+    usuario.turmas << turma
+  end
+
   describe "GET /formularios" do
-    let(:usuario) { create(:usuario) }
+    context "quando ha formularios pendentes" do
+      let!(:formularios) { create_list(:formulario, 3, turma: turma) }
 
-    before do
-      allow_any_instance_of(ActionDispatch::Request)
-        .to receive(:session).and_return({ usuario_id: usuario.id })
+      it "retorna sucesso e exibe cards em grid" do
+        get formularios_path
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to match(/class=['"]lista-formularios['"]/)
+
+        formularios.each do |f|
+          expect(response.body).to include(f.turma.disciplina.nome)
+          expect(response.body).to include("#{f.turma.codigo} (#{f.turma.semestre})")
+        end
+
+        expect(response.body).not_to include("Nenhum formulário disponível para resposta")
+      end
     end
 
-    it "lista formulários não respondidos da turma" do
-      turma = create(:turma)
-      formulario = create(:formulario, turma: turma)
-      usuario.turmas << turma
+    context "quando nao ha formularios pendentes" do
+      it "mostra mensagem de estado vazio" do
+        # sem formularios criados para essa turma
+        get formularios_path
 
-      get formularios_path
-
-      expect(response.body).to include(formulario.nome)
-    end
-
-    it "mostra mensagem quando não há formulários disponíveis" do
-      get formularios_path
-      expect(response.body).to include("Nenhum formulário disponível para resposta")
+        expect(response).to have_http_status(:success)
+        expect(response.body).to match(/class=['"]empty-state['"]/)
+        expect(response.body).to include("Nenhum formulário disponível para resposta")
+      end
     end
   end
 end

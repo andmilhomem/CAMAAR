@@ -10,6 +10,12 @@ require 'rails_helper'
 #     end
 #   end
 # end
+# 
+
+=begin Testes nativos do RSpec
+
 RSpec.describe FormulariosHelper, type: :helper do
   pending "add some examples to (or delete) #{__FILE__}"
 end
+
+=end

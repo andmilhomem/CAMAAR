@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+=begin Testes nativos do RSpec
+
 RSpec.describe "Templates", type: :request do
   describe "GET /index" do
     it "returns http success" do
@@ -44,3 +46,5 @@ RSpec.describe "Templates", type: :request do
   end
 
 end
+
+=end

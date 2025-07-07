@@ -21,14 +21,24 @@ Rails.application.routes.draw do
   get     "/login",   to: "sessoes#new",     as: :login
   post    "/login",   to: "sessoes#create"
   delete  "/logout",  to: "sessoes#destroy", as: :logout
-  
+
   # Rotas relacionadas à redefinação de senha
   get    "/senha/redefinir", to: "senhas#new",    as: :nova_senha
   post   "/senha/redefinir", to: "senhas#create", as: :redefinir_senha
-
+  
   # Rotas relacionadas ao administrador
   get   "/admin",                 to: "admin#index",    as: :admin
   post  "/admin/importar_dados",  to: "admin#importar_dados", as: :importar_dados
+
+  # Rota do painel de visualização de emails
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
+
+  # Rota para viabilizar testes que supõem login em RSpec
+  if Rails.env.test?
+    post "/login_para_teste", to: "sessoes#login_para_teste"
+  end
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest

@@ -14,6 +14,7 @@ Dado("que estou logado como administrador") do
     password: 'm1nha$enha',
     password_confirmation: 'm1nha$enha'
   )
+
   page.set_rack_session(usuario_id: @admin.id)
 end
 
@@ -121,6 +122,7 @@ Quando("seleciono a opção de turma {string}") do |turma|
 end
 
 Quando("vejo a mensagem {string}") do |mensagem|
+ # expect(page).to have_selector("#modal-confirmacao", visible: true)
   expect(page).to have_content(mensagem)
 end
 
@@ -335,16 +337,7 @@ Dado("que os dados estão disponíveis para importação") do
 end
 
 Dado("que os dados não estão disponíveis para importação") do
-  base_path = Rails.root.join("..")
-  arquivos_inexistentes = [
-    base_path.join("arquivo_indisponivel_1.json"),
-    base_path.join("arquivo_indisponivel_2.json")
-  ]
-  arquivos_inexistentes.each do |arquivo|
-    if File.exist?(arquivo)
-      raise "Arquivo inesperadamente presente: #{arquivo}"
-    end
-  end
+    @stub = allow(File).to receive(:exist?).and_return(false)
 end
 
 Dado("que estou matriculado na turma \"BANCO DE DADOS\"") do

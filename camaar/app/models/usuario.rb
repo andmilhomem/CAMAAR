@@ -7,8 +7,8 @@ class Usuario < ApplicationRecord
   validates :ocupacao, presence: true, inclusion: {in: ["discente", "docente"], message: "%{value} não é um valor válido"}
   validates :num_usuario, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
-  validates :e_admin, presence: true
-  validates :esta_ativo, presence: true
+  validates :e_admin, inclusion: { in: [true, false] }
+  validates :e_admin, inclusion: { in: [true, false] }
   validates :password_digest, presence: true
-  validates :matricula, uniqueness: true
+  validates :matricula, uniqueness: true, allow_nil: true
 end

@@ -1,2 +1,25 @@
-%h1 Admin#index
-%p Find me in app/views/admin/index.html.haml
+/ Opções da página Gerenciamento
+
+#container-menu-admin
+  = form_tag importar_dados_path, method: :post do
+    = button_tag "Importar dados", class: "botao-menu-admin"
+  
+  = form_tag templates_path, method: :get do
+    = button_tag "Editar templates", class: "botao-menu-admin"
+
+  = form_tag new_formulario_path, method: :get do
+    = button_tag "Enviar formulários", class: "botao-menu-admin"
+
+  = form_tag resposta_formularios_path, method: :get do
+    = button_tag "Resultados", class: "botao-menu-admin"
+
+#modal-confirmacao-admin{ style: "display: none;" }
+  .modal-caixa-admin
+    %p Dados já importados anteriormente!
+
+    .modal-botoes-admin
+      = form_tag importar_dados_path, method: :post, id: "form-atualizar-dados-admin" do
+        = hidden_field_tag :sobrescrever, true
+        = button_tag "Atualizar dados", class: "botao-modal-admin"
+
+      = button_tag "Desistir", type: "button", class: "botao-modal-admin", id: "botao-desistir-admin"

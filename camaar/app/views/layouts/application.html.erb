@@ -17,12 +17,17 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
+    <%# Inclui ícone de aba%>
+    <%= favicon_link_tag '/favicon.ico' %>
+    
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
   </head>
 
   <body>
+    <%= render "shared/flash" %>
     <%= yield %>
   </body>
 </html>

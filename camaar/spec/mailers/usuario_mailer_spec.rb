@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
 =begin Testes nativos do RSpec
 
-RSpec.describe Questao, type: :model do
+RSpec.describe UsuarioMailer, type: :mailer do
   pending "add some examples to (or delete) #{__FILE__}"
 end
 

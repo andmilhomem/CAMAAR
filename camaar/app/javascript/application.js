@@ -2,4 +2,4 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-import "scripts/botao"
+import "scripts/confirmacao_atualizacao_dados"

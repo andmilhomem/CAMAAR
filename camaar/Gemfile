@@ -56,6 +56,8 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  # Permite visualizar emails enviados em painel
+  gem 'letter_opener_web'
 end
 
 group :test do
@@ -69,4 +71,6 @@ group :development, :test do
   gem "cucumber-rails", require: false
   gem "database_cleaner-active_record"
   gem 'rack_session_access' # Permite manipular session no BDD
+  gem 'factory_bot_rails' # Permite criar instâncias de entidades no banco para testes RSPec
+  gem 'rails-controller-testing'
 end

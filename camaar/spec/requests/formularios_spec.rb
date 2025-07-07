@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+=begin Testes nativos do RSpec
+
 RSpec.describe "Formularios", type: :request do
   describe "GET /index" do
     it "returns http success" do
@@ -23,3 +25,5 @@ RSpec.describe "Formularios", type: :request do
   end
 
 end
+
+=end

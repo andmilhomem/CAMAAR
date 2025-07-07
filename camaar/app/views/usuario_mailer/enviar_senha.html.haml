@@ -1,0 +1,22 @@
+%p Olá, #{@usuario.nome}!
+
+%p Você foi cadastrado(a) na plataforma CAMAAR! Seja bem-vindo(a)!
+
+%p
+  Usuário:
+  = @usuario.email
+
+%p
+  Senha provisória:
+  = @senha_padrao
+
+%p
+  Agora, você deve alterar sua senha clicando
+  = link_to "aqui", login_url(email: @usuario.email, senha: @usuario.password_digest)
+  ou acessando a plataforma CAMAAR.
+
+%p
+  Atenciosamente,
+
+%p
+  Plataforma CAMAAR

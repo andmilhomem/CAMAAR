@@ -8,23 +8,147 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
-.modal {
-  display: none;
+
+/* Reset básico e fonte */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #F3F4F6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Container do menu admin */
+#container-menu-admin {
+  background-color: #FFFFFF;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* sombra sutil */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 462px;
+}
+
+/* Botões do menu admin */
+.botao-menu-admin {
+  background-color: #22C55E;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 18px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0px 1px 2px rgba(105, 81, 255, 0.05);
+  width: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.botao-menu-admin:hover {
+  background-color: #16a34a;
+}
+
+/* Modal de confirmação */
+#modal-confirmacao-admin {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4); /* fundo escurecido */
+  display: none; /* inicialmente escondido */
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-.modal-content {
-  background: white;
-  padding: 20px;
+/* Caixa branca do modal */
+.modal-caixa-admin {
+  background-color: #FFFFFF;
+  padding: 32px;
   border-radius: 8px;
-  max-width: 400px;
-  width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* sombra mais profunda */
+  text-align: center;
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Texto da mensagem no modal */
+.modal-caixa-admin p {
+  font-size: 18px;
+  color: #111827;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+/* Container dos botões do modal - alinhados lado a lado com espaço */
+.modal-botoes-admin {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+/* Botões do modal */
+.botao-modal-admin {
+  background-color: #22C55E;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  min-width: 140px;
+  transition: background-color 0.2s ease;
+}
+
+.botao-modal-admin:hover {
+  background-color: #16a34a;
+}
+
+/* Flash message estilizado para ser mais leve */
+.flash {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #22C55E;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 2000;
+  animation: slide-down 0.3s ease-out;
+  max-width: 80%;
+  text-align: center;
+  pointer-events: none; /* evita que atrapalhe cliques */
+}
+
+.flash.notice {
+  background-color: #22C55E;
+}
+
+.flash.alert {
+  background-color: #EF4444;
+}
+
+/* Animação de entrada do flash */
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }

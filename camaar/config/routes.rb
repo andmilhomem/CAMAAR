@@ -23,8 +23,11 @@ Rails.application.routes.draw do
   delete  "/logout",  to: "sessoes#destroy", as: :logout
   
   # Rotas relacionadas à redefinação de senha
-  get    "/senha/redefinir", to: "senhas#new",    as: :nova_senha
-  post   "/senha/redefinir", to: "senhas#create", as: :redefinir_senha
+  get 'senha/esqueci', to: 'senhas#new', as: :esqueci_senha
+  post 'senha/esqueci', to: 'senhas#create'
+  get 'senha/redefinir', to: 'senhas#edit', as: :redefinir_senha
+  patch 'senha/redefinir', to: 'senhas#update'
+
 
   # Rotas relacionadas ao administrador
   get   "/admin",                 to: "admin#index",    as: :admin

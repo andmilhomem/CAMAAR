@@ -1,0 +1,37 @@
+<div class="login-container">
+  <div class="login-form-area">
+    <h2>Redefinir Senha</h2>
+
+    <%# Este formulário agora aponta para a rota unificada de update %>
+    <%= form_with model: @usuario, url: redefinir_senha_path(token: params[:token]), method: :patch do |form| %>
+      <% if form.object.errors.any? %>
+        <div class="flash-message alert" style="text-align: left;">
+          <strong>Ocorreram erros:</strong>
+          <ul>
+            <% form.object.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="field">
+        <%= form.label :password, "Nova Senha" %><br />
+        <%= form.password_field :password, required: true %>
+      </div>
+
+      <div class="field">
+        <%= form.label :password_confirmation, "Repita sua Nova Senha" %><br />
+        <%= form.password_field :password_confirmation, required: true %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit "Salvar Nova Senha", class: "login-button" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="welcome-area">
+    Bem-vindo<br>ao<br>Camaar
+  </div>
+</div>

@@ -19,7 +19,7 @@ unless Usuario.exists?(email: 'mandelli@unb.br')
     email: 'mandelli@unb.br',
     e_admin: true,
     esta_ativo: true,
-    password_digest: BCrypt::Password.create(ENV.fetch('SENHA_ADMIN_CAMAAR', '1$senhaADMIN')),
+    password: '1$senhaADMIN',
     departamento: 'DEPTO CIÊNCIAS DA COMPUTAÇÃO'
   )
 

@@ -1,0 +1,30 @@
+<div class="login-container">
+  <div class="login-form-area">
+    
+    <% if flash[:alert] %>
+      <div class="flash-message alert"><%= flash[:alert] %></div>
+    <% end %>
+    <h2>LOGIN</h2>
+
+    <%= form_with url: login_path, scope: "" do |form| %>
+      <div class="field">
+        <%= form.label :email, "Email" %><br />
+        <%= form.email_field :email, placeholder: "aluno@aluno.unb.br", required: true %>
+      </div>
+
+      <div class="field">
+        <%= form.label :password, "Senha" %><br />
+        <%= form.password_field :password, placeholder: "Password", required: true %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit "Entrar", class: "login-button" %>
+      </div>
+    <% end %>
+
+  </div>
+
+  <div class="welcome-area">
+    Bem-vindo<br>ao<br>Camaar
+  </div>
+</div>

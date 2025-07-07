@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
 
   before_action :requerer_login
-  before_action :requerer_usuario_ativo
+  #before_action :requerer_usuario_ativo
 
   helper_method :usuario_atual, :usuario_logado?
 

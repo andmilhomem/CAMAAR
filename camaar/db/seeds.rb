@@ -31,3 +31,22 @@ unless Usuario.exists?(email: 'mandelli@unb.br')
 else
   puts "Usuário admin já existe."
 end
+
+Usuario.create!(
+  nome: 'Aluno de Teste',
+  formacao: 'GRADUAÇÃO',
+  ocupacao: 'discente',
+  num_usuario: 11223344556,
+  matricula: 123456789,
+  email: 'aluno.teste@exemplo.com',
+  departamento: 'DEPTO MATEMÁTICA',
+  curso: 'Matemática',
+
+  # --- A Senha Temporária ---
+  password: "Trocar@123",
+  password_confirmation: "Trocar@123",
+  e_admin: false,  
+  esta_ativo: false     
+)
+
+puts "Usuário comum criado com sucesso!"

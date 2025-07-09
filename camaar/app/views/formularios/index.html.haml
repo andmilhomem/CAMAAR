@@ -1,2 +1,10 @@
-%h1 Formularios#index
-%p Find me in app/views/formularios/index.html.haml
+= stylesheet_link_tag "formulario.css"
+
+%h1 Gerenciamento - Resultados
+
+.container
+    - @formularios.each do |form|
+        .card
+            %p.texto-destaque= form.turma.disciplina.nome
+            %p.semestre= form.turma.semestre
+            %p.texto-destaque= (get_nome_professor form.turma)

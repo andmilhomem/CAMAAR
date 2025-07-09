@@ -1,6 +1,6 @@
 class SessoesController < ApplicationController
   skip_before_action :requerer_login, only: [:new, :create]
-  #skip_before_action :requerer_usuario_ativo, only: [:new, :create]
+  skip_before_action :requerer_usuario_ativo, only: [:new, :create, :destroy]
 
   def new
     # Apenas renderiza o formulário de login

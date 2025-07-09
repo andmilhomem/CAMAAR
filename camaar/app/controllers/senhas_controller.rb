@@ -1,23 +1,12 @@
 
 class SenhasController < ApplicationController
-  skip_before_action :requerer_login, only: [:new, :create]
+  skip_before_action :requerer_login, only: [:edit, :update]
+  skip_before_action :requerer_usuario_ativo, only: [:edit, :update]
 
   before_action :set_usuario, only: [:edit, :update]
-
-  def new
-  end
-
-  def create
-    @usuario = Usuario.find_by(email: params[:email])
-    if @usuario.present?
-      PasswordMailer.with(usuario: @usuario).reset.deliver_later
-    end
-    redirect_to root_path, notice: "Se o e-mail existir em nossa base, um link de redefinição foi enviado."
-  end
-
   
   def edit
-    
+
   end
 
   # Salva a nova senha
@@ -25,7 +14,7 @@ class SenhasController < ApplicationController
     # O @usuario é encontrado pelo before_action :set_usuario
     if @usuario.update(password_params)
       # Após redefinir, faz o login do usuário para uma experiência mais fluida
-      session[:usuario_id] = @usuario.id
+
       redirect_to login_path, notice: "Sua senha foi atualizada com sucesso!"
     else
       render :edit, status: :unprocessable_entity

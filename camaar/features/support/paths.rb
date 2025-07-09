@@ -10,7 +10,7 @@ module NavigationHelpers
 
     when "Gerenciamento" then admin_path
     when "Login" then login_path
-    when "Redefinição de senha" then nova_senha_path
+    when "Redefinição de senha" then redefinir_senha_path
     when "Avaliações" then formularios_path
     when "Gerenciamento - Resultados" then resposta_formularios_path
     when "Gerenciamento - Templates" then templates_path

@@ -10,22 +10,22 @@ Funcionalidade: Sistema de definição de senha
         E que estou na página "Redefinição de senha"
 
     Cenário: Usuário preenche a senha conforme padrão
-        Quando preencho o campo "Senha" com o valor "12ABcd$$"
-        E preencho o campo "Confirme a senha" com o valor "12ABcd$$"
-        E clico no botão "Alterar senha"
-        Então devo ir para a página "Avaliações"
-        E devo ver a mensagem "Senha redefinida com sucesso!"
+        Quando preencho o campo "Nova Senha" com o valor "12ABcd$$"
+        E preencho o campo "Repita sua Nova Senha" com o valor "12ABcd$$"
+        E clico no botão "Salvar Nova Senha"
+        Então devo ir para a página "Login"
+        E devo ver a mensagem "Sua senha foi atualizada com sucesso!"
 
     Cenário: Usuário preenche a senha de forma inválida
-        Quando preencho o campo "Senha" com o valor "123456"
-        E preencho o campo "Confirme a senha" com o valor "123456"
-        E clico no botão "Alterar senha"
-        Então devo ir para a página "Avaliações"
+        Quando preencho o campo "Nova Senha" com o valor "123456"
+        E preencho o campo "Repita sua Nova Senha" com o valor "123456"
+        E clico no botão "Salvar Nova Senha"
+        Então devo ir para a página "Redefinição de senha"
         E devo ver a mensagem "Formato de senha inválido!"
 
     Cenário: Senhas diferentes
-        Quando preencho o campo "Senha" com o valor "12ABcd$$"
-        Mas preencho o campo "Confirme a senha" com o valor "12abCD$$"
-        E clico no botão "Alterar senha"
+        Quando preencho o campo "Nova Senha" com o valor "12ABcd$$"
+        Mas preencho o campo "Repita sua Nova Senha" com o valor "12abCD$$"
+        E clico no botão "Salvar Nova Senha"
         Então devo ver a mensagem "Senhas diferentes!"
   

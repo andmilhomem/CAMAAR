@@ -1,2 +1,418 @@
-%h1 Templates#new
-%p Find me in app/views/templates/new.html.haml
+- if defined?(@template) && @template.errors.any?
+  .alert.alert-danger
+    %h4 Erros ao salvar o template:
+    %ul
+      - @template.errors.full_messages.each do |msg|
+        %li= msg
+%a{ href: templates_path, class: 'btn-voltar' } ← Voltar
+#mensagem-erro.alert.alert-danger{ style: 'display: none;' }
+.template-form-container
+  .template-form-card
+    %form{ id: 'formulario', action: templates_path, method: 'post', onsubmit: 'return validarEEnviar(event);' }
+      .form-row
+        %label.nome-label{ for: 'nome_template' } Nome do template:
+        %input{ type: 'text', id: 'nome_template', name: 'template[nome]', placeholder: 'Nome do template', class: 'material-input' }
+      #perguntas-container
+        .add-question-row
+          %button.add-question-btn{ type: 'button', onclick: 'adicionarPergunta()', title: 'Adicionar questão' }
+            %span +
+        .footer-row
+          %button.create-btn{ type: 'submit', form: 'formulario' } Criar
+
+:javascript
+  let contadorPerguntas = 0;
+
+  window.onload = () => {
+    adicionarPergunta();
+  };
+
+  function mostrarErro(mensagem) {
+    const mensagemErro = document.getElementById('mensagem-erro');
+    mensagemErro.textContent = mensagem;
+    mensagemErro.style.display = 'block';
+    mensagemErro.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function validarEEnviar(event) {
+    // Limpar mensagens de erro anteriores
+    const mensagemErro = document.getElementById('mensagem-erro');
+    mensagemErro.style.display = 'none';
+    
+    // Validação dos campos
+    const nomeTemplate = document.getElementById('nome_template').value.trim();
+    if (!nomeTemplate) {
+      mostrarErro('Nome do template não pode ser vazio!');
+      return false;
+    }
+    const perguntas = document.querySelectorAll('.pergunta');
+    if (perguntas.length === 0) {
+      mostrarErro('Adicione pelo menos uma pergunta.');
+      return false;
+    }
+    for (let i = 0; i < perguntas.length; i++) {
+      const pergunta = perguntas[i];
+      const titulo = pergunta.querySelector('input[type="text"][name^="perguntas"][name$="[titulo]"]');
+      if (!titulo || !titulo.value.trim()) {
+        mostrarErro('O enunciado da questão é obrigatório!');
+        return false;
+      }
+      const tipo = pergunta.querySelector('select').value;
+      if (tipo === 'radio') {
+        const opcoes = pergunta.querySelectorAll('input.opcao');
+        // Verificar se há opções preenchidas
+        let opcoesPreenchidas = 0;
+        for (let j = 0; j < opcoes.length; j++) {
+          if (opcoes[j].value.trim()) {
+            opcoesPreenchidas++;
+          }
+        }
+        if (opcoesPreenchidas === 0) {
+          mostrarErro('A questão de marcação deve conter pelo menos uma opção de resposta!');
+          return false;
+        }
+        // Verificar se todas as opções estão preenchidas (se houver pelo menos uma)
+        for (let j = 0; j < opcoes.length; j++) {
+          if (!opcoes[j].value.trim()) {
+            mostrarErro(`A opção ${j + 1} da pergunta ${i + 1} não pode estar em branco.`);
+            return false;
+          }
+        }
+      }
+    }
+    // Serialização dos dados para envio Rails nested attributes
+    const form = document.getElementById('formulario');
+    const formData = new FormData(form);
+    let questaoIndex = 0;
+    perguntas.forEach((pergunta, i) => {
+      const tipo = pergunta.querySelector('select').value;
+      const titulo = pergunta.querySelector('input[type="text"][name^="perguntas"][name$="[titulo]"]').value;
+      formData.append(`template[questaos_attributes][${questaoIndex}][num_questao]`, i + 1);
+      formData.append(`template[questaos_attributes][${questaoIndex}][tipo]`, tipo.charAt(0).toUpperCase() + tipo.slice(1));
+      formData.append(`template[questaos_attributes][${questaoIndex}][enunciado]`, titulo);
+      if (tipo === 'radio') {
+        const opcoes = pergunta.querySelectorAll('input.opcao');
+        opcoes.forEach((opcao, j) => {
+          formData.append(`template[questaos_attributes][${questaoIndex}][opcaos_attributes][${j}][num_opcao]`, j + 1);
+          formData.append(`template[questaos_attributes][${questaoIndex}][opcaos_attributes][${j}][texto_opcao]`, opcao.value);
+        });
+      }
+      questaoIndex++;
+    });
+    // Envio via fetch
+    fetch(form.action, {
+      method: 'POST',
+      headers: {
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      body: formData
+    }).then(response => {
+      if (response.redirected) {
+        window.location = response.url;
+      } else {
+        response.json().then(data => {
+          if (data.success) {
+            window.location = data.redirect_url;
+          } else {
+            const errorMessage = data.errors ? data.errors.join(', ') : 'Erro ao salvar template';
+            mostrarErro(errorMessage);
+          }
+        }).catch(() => {
+          response.text().then(text => mostrarErro('Erro ao salvar: ' + text));
+        });
+      }
+    });
+    event.preventDefault();
+    return false;
+  }
+
+  function adicionarPergunta() {
+    const perguntasContainer = document.getElementById("perguntas-container");
+    const addQuestionRow = perguntasContainer.querySelector(".add-question-row");
+    const id = contadorPerguntas++;
+    const div = document.createElement("div");
+    div.className = "pergunta question-card";
+    div.setAttribute("data-id", id);
+    div.setAttribute("data-nome", `Questão ${id + 1}`);
+
+    div.innerHTML = `
+      <label class="question-title">
+        Tipo:
+        <select onchange="trocarTipo(this, ${id})" class="question-select">
+          <option value="texto">Texto</option>
+          <option value="radio">Radio</option>
+        </select>
+      </label><br><br>
+
+      <label>
+        Texto:<br>
+        <input type="text" name="perguntas[${id}][titulo]" placeholder="Texto" style="width: 100%;" class="question-text-input">
+      </label>
+
+      <div class="respostas" id="respostas_${id}"></div>
+    `;
+
+    // Botão de remover pergunta (exceto a primeira)
+    if (contadorPerguntas > 1) {
+      const btnRemove = document.createElement("button");
+      btnRemove.type = "button";
+      btnRemove.innerText = "X";
+      btnRemove.className = "remover-pergunta";
+      btnRemove.onclick = () => div.remove();
+      div.prepend(btnRemove);
+    }
+
+    // Insere a pergunta antes dos botões
+    perguntasContainer.insertBefore(div, addQuestionRow);
+  }
+
+  function trocarTipo(select, id) {
+    const container = document.getElementById(`respostas_${id}`);
+    container.innerHTML = "";
+
+    if (select.value === "radio") {
+      adicionarOpcao(id);
+      adicionarOpcao(id);
+
+      const botaoAdd = document.createElement("button");
+      botaoAdd.type = "button";
+      botaoAdd.className = "add-option-btn";
+      botaoAdd.title = "Adicionar opção";
+      botaoAdd.innerHTML = "+";
+      botaoAdd.onclick = () => adicionarOpcao(id);
+
+      container.appendChild(botaoAdd);
+    }
+  }
+
+  function adicionarOpcao(id) {
+    const container = document.getElementById(`respostas_${id}`);
+    const opcoes = container.querySelectorAll('input.opcao');
+    const input = document.createElement("input");
+    input.type = "text";
+    input.name = `perguntas[${id}][opcoes][]`;
+    input.placeholder = "Opção de resposta";
+    input.className = "opcao option-input";
+
+    // Cria o label "Opção N"
+    const label = document.createElement("label");
+    label.innerText = `Opção ${opcoes.length + 1}`;
+    label.appendChild(input);
+
+    // Botão de remover opção (só aparece a partir da terceira)
+    let btnRemove = null;
+    if (opcoes.length >= 2) {
+      btnRemove = document.createElement("button");
+      btnRemove.type = "button";
+      btnRemove.innerText = "X";
+      btnRemove.className = "remover-opcao";
+      btnRemove.onclick = () => {
+        label.remove();
+        btnRemove.remove();
+      };
+    }
+
+    const botao = container.querySelector("button.add-option-btn");
+    if (botao) {
+      container.insertBefore(label, botao);
+      if (btnRemove) container.insertBefore(btnRemove, botao);
+    } else {
+      container.appendChild(label);
+      if (btnRemove) container.appendChild(btnRemove);
+    }
+  }
+
+:css
+  .pergunta { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; position: relative; }
+  .opcao { margin-left: 20px; display: inline-block; margin-bottom: 5px; }
+  .remover-pergunta { position: absolute; top: 5px; right: 5px; background: #eee; border: none; color: #c00; font-weight: bold; cursor: pointer; }
+  .remover-opcao { margin-left: 5px; background: #eee; border: none; color: #c00; font-weight: bold; cursor: pointer; }
+  button { margin-top: 10px; }
+  body {
+    background: #f0f0f0;
+    font-family: 'Roboto', Arial, sans-serif;
+  }
+  .template-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 0;
+  }
+  .template-form-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px #0002;
+    padding: 32px 32px 24px 32px;
+    min-width: 350px;
+    max-width: 420px;
+    width: 100%;
+  }
+  .form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  .nome-label {
+    margin-right: 12px;
+    font-weight: 500;
+    font-size: 1.1em;
+  }
+  .material-input {
+    border: none;
+    border-bottom: 2px solid #bbb;
+    outline: none;
+    width: 100%;
+    font-size: 1.1em;
+    padding: 6px 0 4px 0;
+    background: transparent;
+    margin-left: 8px;
+  }
+  .material-input:focus {
+    border-bottom: 2px solid #4caf50;
+  }
+  .question-card {
+    background: none;
+    border-radius: 10px;
+    margin-bottom: 32px;
+    padding: 0 0 16px 0;
+    box-shadow: none;
+    border-bottom: 1px solid #eee;
+  }
+  .question-title {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 12px;
+  }
+  .question-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .question-label {
+    min-width: 60px;
+    margin-right: 10px;
+    color: #444;
+  }
+  .question-select {
+    border: none;
+    border-bottom: 2px solid #bbb;
+    background: transparent;
+    font-size: 1em;
+    padding: 4px 0;
+    outline: none;
+    width: 120px;
+    margin-right: 16px;
+  }
+  .question-select:focus {
+    border-bottom: 2px solid #673ab7;
+  }
+  .question-text-input {
+    border: none;
+    border-bottom: 2px solid #bbb;
+    outline: none;
+    width: 100%;
+    font-size: 1em;
+    padding: 4px 0;
+    background: transparent;
+  }
+  .question-text-input:focus {
+    border-bottom: 2px solid #4caf50;
+  }
+  .options-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .option-input {
+    border: none;
+    border-bottom: 2px solid #bbb;
+    outline: none;
+    width: 100%;
+    font-size: 1em;
+    padding: 4px 0;
+    background: transparent;
+    margin-right: 8px;
+  }
+  .option-input:focus {
+    border-bottom: 2px solid #673ab7;
+  }
+  .add-option-btn {
+    background: #444;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    cursor: pointer;
+    margin-left: 8px;
+    transition: background 0.2s;
+  }
+  .add-option-btn:hover {
+    background: #222;
+  }
+  .add-question-row {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0 0 0;
+  }
+  .add-question-btn {
+    background: #673ab7;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #0002;
+    transition: background 0.2s;
+  }
+  .add-question-btn:hover {
+    background: #4caf50;
+  }
+  .footer-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+  }
+  .create-btn {
+    background: #19c37d;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.2em;
+    padding: 12px 48px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #0002;
+    transition: background 0.2s;
+  }
+  .create-btn:hover {
+    background: #13a06b;
+  }
+  .btn-voltar {
+    display: inline-block;
+    margin-bottom: 2em;
+    background: #fff;
+    color: #673ab7;
+    border: 2px solid #673ab7;
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-size: 1em;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 2px 8px #0001;
+  }
+  .btn-voltar:hover {
+    background: #673ab7;
+    color: #fff;
+  }

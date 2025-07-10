@@ -1,0 +1,115 @@
+/* Estilos para a tela de login e redefinição de senha */
+
+.login-container {
+  display: flex;
+  width: 800px;
+  max-width: 95%; /* Garante que ele se ajuste em telas menores */
+  margin: 60px auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.login-form-area {
+  flex: 1;
+  padding: 40px;
+  background-color: white;
+
+  h2 {
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+  .field {
+    margin-bottom: 25px;
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+      font-weight: bold;
+    }
+
+    /* Estilo para os campos de texto */
+    input[type="email"], input[type="password"], input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 1em;
+      color: #333;
+
+      &::placeholder {
+        color: #999;
+      }
+    }
+  }
+
+  .actions {
+    margin-top: 30px;
+  }
+
+  .login-button {
+    background-color: #28a745; /* Cor verde */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 14px 24px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #218838; /* Verde um pouco mais escuro */
+    }
+  }
+}
+
+.welcome-area {
+  flex: 1;
+  background-color: #483d8b; /* Roxo/Azul escuro, similar ao original */
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5em;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.3;
+  padding: 40px;
+}
+
+.flash-message.alert {
+  padding: 1rem;
+  margin-bottom: 20px; /* Adiciona um espaço entre a mensagem e o título LOGIN */
+  border-radius: 5px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background-color: #f8d7da; /* Fundo vermelho claro */
+  color: #721c24;           /* Texto vermelho escuro */
+  border: 1px solid #f5c6cb;  /* Borda vermelha */
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    width: 100%;
+    margin: 20px auto;
+  }
+
+  .welcome-area {
+    min-height: 200px;
+  }
+}
+

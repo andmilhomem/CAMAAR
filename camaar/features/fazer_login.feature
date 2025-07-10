@@ -17,11 +17,11 @@ Funcionalidade: Sistema de login
     Cenário: Usuário não cadastrado
         Quando preencho o campo "Email" com um e-mail não correspondente a um usuário cadastrado
         E clico no botão "Entrar"
-        Então devo ver a mensagem "Usuário ou Senha Inválidos"
+        Então devo ver a mensagem "Email ou senha inválidos!"
     
     Cenário: Senha incorreta
         Quando preencho o campo "Email" com um e-mail correspondente a um usuário cadastrado
         Mas preencho o campo "Senha" com senha não correspondente a esse usuário
         E clico no botão "Entrar"
-        Então devo ver a mensagem "Usuário ou Senha Inválidos"
+        Então devo ver a mensagem "Email ou senha inválidos!"
         

@@ -11,8 +11,8 @@ Dado("que estou logado como administrador") do
     email: 'admin@example.com',
     e_admin: true,
     esta_ativo: true,
-    password: 'm1nha$enha',
-    password_confirmation: 'm1nha$enha'
+    password: 'M1nha$enha',
+    password_confirmation: 'M1nha$enha'
   )
 
   page.set_rack_session(usuario_id: @admin.id)
@@ -28,8 +28,8 @@ Dado("que estou logado como participante") do
     email: 'joaoalves@aluno.unb.br',
     e_admin: false,
     esta_ativo: true,
-    password: 'm1nha$enha',
-    password_confirmation: 'm1nha$enha'
+    password: 'M1nha$enha',
+    password_confirmation: 'M1nha$enha'
   )
   page.set_rack_session(usuario_id: @participante.id)
 end
@@ -44,8 +44,8 @@ Dado("que estou logado como novo usuário") do
     email: 'joaoalves@aluno.unb.br',
     e_admin: false,
     esta_ativo: false,
-    password: 'm1nha$enha',
-    password_confirmation: 'm1nha$enha'
+    password: 'M1nha$enha',
+    password_confirmation: 'M1nha$enha'
   )
   page.set_rack_session(usuario_id: @participante.id)
 end
@@ -161,15 +161,15 @@ Quando("clico no link de redefinição de senha recebido por e-mail") do
     email: 'joaoalves@aluno.unb.br',
     e_admin: false,
     esta_ativo: false,
-    password: 'm1nha$enha',
-    password_confirmation: 'm1nha$enha'
+    password: 'M1nha$enha',
+    password_confirmation: 'M1nha$enha'
   )
   visit login_path(email: usuario.email, senha: usuario.password_digest) # /login?email= ... &senha= ...
 end
 
 Quando("preencho o campo \"Email\" com um e-mail de usuário novo") do
   @email = 'joaoalves@aluno.unb.br'
-  @senha = 'm1nha$enha'
+  @senha = 'M1nha$enha'
   
   @usuario = Usuario.create!(
     nome: 'João Alves',
@@ -188,7 +188,7 @@ end
 
 Quando("preencho o campo \"Email\" com um e-mail correspondente a um usuário cadastrado") do
   @email = 'joaoalves@aluno.unb.br'
-  @senha = 'm1nha$enha'
+  @senha = 'M1nha$enha'
   
   @usuario = Usuario.create!(
     nome: 'João Alves',
@@ -229,8 +229,8 @@ Dado("que já existem turmas, matérias e participantes cadastrados") do
   email: 'joaoalves@aluno.unb.br',
   e_admin: false,
   esta_ativo: true,
-  password: 'm1nha$enha',
-  password_confirmation: 'm1nha$enha'
+  password: 'M1nha$enha',
+  password_confirmation: 'M1nha$enha'
   )
   
   @disciplina = Disciplina.create!(

@@ -96,7 +96,10 @@ class AdminController < ApplicationController
           password: senha_padrao
         )
         usuario.save!
-        UsuarioMailer.with(usuario: usuario, senha_padrao: senha_padrao).enviar_senha.deliver_later
+
+        token = usuario.signed_id(purpose: "password_reset", expires_in: 60.minutes)
+
+        UsuarioMailer.with(usuario: usuario, senha_padrao: senha_padrao, token: token).enviar_senha.deliver_later
       end
 
       docentes = entrada["docente"]
@@ -125,7 +128,7 @@ class AdminController < ApplicationController
   def gerar_senha(nome, usuario)
     primeira_letra = nome[0].downcase rescue "x"
     primeiros_digitos = usuario.to_s[0,4] || "0000"
-    "#{primeira_letra}a__#{primeiros_digitos}"
+    "#{primeira_letra}A__#{primeiros_digitos}"
   end
 
 end

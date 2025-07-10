@@ -12,7 +12,7 @@
 
 %p
   Agora, você deve alterar sua senha clicando
-  = link_to "aqui", login_url(email: @usuario.email, senha: @usuario.password_digest)
+  = link_to "aqui", redefinir_senha_url(token: @token)
   ou acessando a plataforma CAMAAR.
 
 %p

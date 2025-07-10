@@ -3,9 +3,9 @@
 %h1 Gerenciamento - Resultados
 
 .container
-    - if @formularios.length > 0
+    - if @formularios and @formularios.length > 0
         - @formularios.each do |form|
-            = link_to new_formulario_path do        
+            = link_to resposta_formulario_path form.id do        
                 .card
                     %div
                         %p.texto-destaque= form.turma.disciplina.nome

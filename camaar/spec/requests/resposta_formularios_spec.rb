@@ -45,6 +45,41 @@ RSpec.describe "RespostaFormularios", type: :request do
     end
   end
 
+  describe "GET /formulario/:id" do
+    context "quando o formulário possui respostas" do
+
+      before do
+        Formulario.destroy_all
+        RespostaFormulario.destroy_all
+        @resposta_1 = create(:resposta_formulario, :com_duas_questoes)
+        @resposta_outro_formulario = create(:resposta_formulario, :com_duas_questoes)
+      end
+      
+      it "deve realizar download do arquivo .csv" do
+        get "/resposta_formularios/#{@resposta_1.formulario_id}"
+        expect(response.headers['Content-Disposition'])
+          .to include ".csv"
+        expect(response.headers['Content-Disposition'])
+          .to include "attachment;"
+      end
+      
+      it "arquivo deve ter cabeçalho" do
+        get "/resposta_formularios/#{@resposta_1.formulario_id}"
+        primeira_linha = response.body.split("\n")[0]
+        expect(primeira_linha).to eq "id,data_resposta,num_questao,texto_resposta"
+      end
+
+      it "arquivo deve mostrar APENAS respostas do formulario especificado" do
+        get "/resposta_formularios/#{@resposta_1.formulario_id}"
+        resposta_questao = @resposta_1.resposta_questaos[0]
+        expect(response.body)
+          .to include "#{@resposta_1.id.to_s},#{@resposta_1.data_resposta},#{resposta_questao.num_questao.to_s},#{resposta_questao.texto_resposta}"
+        expect(response.body)
+          .not_to include "#{@resposta_outro_formulario.formulario_id},#{@resposta_outro_formulario.data_resposta}"
+      end
+    end
+  end
+
   describe "GET /new" do
     it "returns http success" do
       get "/resposta_formularios/new"

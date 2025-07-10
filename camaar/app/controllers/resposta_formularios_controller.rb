@@ -2,6 +2,7 @@ class RespostaFormulariosController < ApplicationController
   before_action :requerer_admin, only: :index
 
   def index
+    @formularios = Formulario.respondidos
   end
 
   def new

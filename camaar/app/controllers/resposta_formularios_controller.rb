@@ -39,11 +39,16 @@ class RespostaFormulariosController < ApplicationController
           texto_resposta:      valor
         )
       end
+
+      # Registra resposta na tabela associativa de usuários e formulários
+      usuario = Usuario.find(session[:usuario_id])
+      usuario.formularios << @formulario unless usuario.formularios.exists?(@formulario.id)
+
     end
 
-    session[:formularios_respondidos] ||= []
-    session[:formularios_respondidos] << @formulario.id
-    session[:formularios_respondidos].uniq!
+   # session[:formularios_respondidos] ||= []
+   # session[:formularios_respondidos] << @formulario.id
+   # session[:formularios_respondidos].uniq!
 
     redirect_to formularios_path, notice: "Resposta enviada com sucesso!"
   rescue => e

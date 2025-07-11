@@ -84,7 +84,9 @@ Quando("clico no botão {string} dentro do template {string}") do |nome_botao, n
 end
 
 Quando('clico no formulário da turma {string}') do |nome_disciplina|
-  find("[data-nome='#{nome_disciplina}']").click
+  within("[data-nome='#{nome_disciplina}']") do
+    click_link
+  end
 end
 
 Quando("apago o conteúdo do campo {string}") do |nome_campo|

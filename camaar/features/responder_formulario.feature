@@ -8,8 +8,8 @@ Funcionalidade: Responder formulário
     Contexto:
         Dado que estou logado como participante
         E que estou matriculado na turma "BANCO DE DADOS"
-        E que estou na página "Avaliações"
         E que existe um formulário não respondido na turma "BANCO DE DADOS" com uma questão do tipo "Texto" e outra do tipo "Radio" com duas opções, "Sim" e "Não"
+        E que estou na página "Avaliações"
         Quando clico no formulário da turma "BANCO DE DADOS"
 
     Cenário: Enviar formulário preenchido com sucesso

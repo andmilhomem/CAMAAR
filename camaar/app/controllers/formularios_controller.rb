@@ -6,7 +6,10 @@ class FormulariosController < ApplicationController
     turmas_ids   = usuario.turmas.ids
 
     # lê do session a lista de formulários já respondidos por este usuário
-    responded_ids = session[:formularios_respondidos] || []
+    #responded_ids = session[:formularios_respondidos] || []
+
+    # Pega da tabela associativa todos os formulários já respondidos pelo usuário
+    responded_ids = usuario.formularios.ids
 
     @formularios = Formulario
                      .where(turma_id: turmas_ids)

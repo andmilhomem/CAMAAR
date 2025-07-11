@@ -26,7 +26,7 @@
 
   </head>
 
-  <body class="app <%= "#{controller_name}-#{action_name}" %>">
+<body class="<%= "#{controller_name}-#{action_name}" %>">   
     <%= render "shared/flash" %>
     <div id="flash-container" class="toast-container">
       <% flash.each do |type, msg| %>

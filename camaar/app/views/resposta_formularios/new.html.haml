@@ -4,11 +4,13 @@
   = form_with url: resposta_formularios_path,
               method: :post,
               local: true,
-              html: { id: "resposta-form" } do
+              html: { id: "resposta-form" },
+              data: { turbo: false } do
+
     = hidden_field_tag :formulario_id, @formulario.id
 
     - @questaos.each_with_index do |questao, i|
-      .questao{ data: { id: questao.id } }
+      .questao{ data: { nome: "Questão #{i+1}" } }
         %p Questão #{i+1}: #{questao.enunciado}
 
         - if questao.tipo == "Texto"

@@ -7,11 +7,11 @@ Funcionalidade: Criar formulário de avaliação
 
     Contexto:
         Dado que estou logado como administrador
-        E que estou na página "Gerenciamento"
 
     Cenário: Templates e turmas disponíveis e selecionados
         Dado que existe uma turma "BANCO DE DADOS"
         E que existe um template "Avaliação Discente 1"
+        E que estou na página "Gerenciamento"
         Quando clico no botão "Enviar Formulários"
         E seleciono a opção "Avaliação Discente 1" na caixa "Template"
         E seleciono a opção de turma "BANCO DE DADOS"
@@ -22,6 +22,7 @@ Funcionalidade: Criar formulário de avaliação
     Cenário: Templates e turmas disponíveis e informações incompletas
         Dado que existe uma turma "BANCO DE DADOS"
         E que existe um template "Avaliação Discente 1"
+        E que estou na página "Gerenciamento"
         Quando clico no botão "Enviar Formulários"
         E seleciono a opção "Avaliação Discente 1" na caixa "Template"
         E clico no botão "Enviar"
@@ -29,8 +30,10 @@ Funcionalidade: Criar formulário de avaliação
 
     Cenário: Nenhum template cadastrado
         Dado que não existem templates cadastrados
+        E que estou na página "Gerenciamento"
         Então devo ver a mensagem "Nenhum template disponível!"
 
     Cenário: Nenhuma turma cadastrada
         Dado que não existem turmas cadastradas
+        E que estou na página "Gerenciamento"
         Então devo ver a mensagem "Nenhuma turma disponível!"

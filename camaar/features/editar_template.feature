@@ -7,8 +7,8 @@ Funcionalidade: Edição e deleção de templates
     
     Contexto:
         Dado que estou logado como administrador
-        E que estou na página "Gerenciamento - Templates"
         E que existe um template previamente criado com o nome "Formulário de opinião"
+        E que estou na página "Gerenciamento - Templates"
     
     Cenário: Editar um template existente com sucesso
         Quando clico no botão "Editar template" dentro do template "Formulário de opinião"

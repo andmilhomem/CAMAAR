@@ -8,12 +8,13 @@ Funcionalidade: Visualização de formulários para responder
     Contexto:
         Dado que estou logado como participante
         E que estou matriculado na turma "BANCO DE DADOS"
-        E que estou na página "Avaliações"
 
     Cenário: Visualizar formulários disponíveis
         Dado que existe um formulário não respondido na turma "BANCO DE DADOS"
+        E que estou na página "Avaliações"
         Então devo ver o formulário da turma "BANCO DE DADOS"
 
     Cenário: Nenhum formulário disponível
         Dado que existe apenas o formulário da turma "BANCO DE DADOS", já respondido
+        E que estou na página "Avaliações"
         Então devo ver a mensagem "Nenhum formulário disponível para resposta"

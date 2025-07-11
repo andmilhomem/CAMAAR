@@ -3,7 +3,7 @@
 - if @tem_formularios
   .lista-formularios
     - @formularios.each do |form|
-      .card-formulario
+      .card-formulario{ "data-nome": form.turma.disciplina.nome }
         .card-header
           %h2= form.turma.disciplina.nome
         .card-body

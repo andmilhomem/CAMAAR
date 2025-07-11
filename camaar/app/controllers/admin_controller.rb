@@ -27,22 +27,32 @@ class AdminController < ApplicationController
     
     if params[:sobrescrever] == "true"
       
-      Disciplina.destroy_all
-      Usuario.where(e_admin: false).destroy_all
+      ActiveRecord::Base.transaction do
 
-      criar_disciplinas_turmas(caminho_arquivo_disciplinas)
-      criar_usuarios(caminho_arquivo_membros)
+        Disciplina.destroy_all
+        Usuario.where(e_admin: false).destroy_all
+
+        criar_disciplinas_turmas(caminho_arquivo_disciplinas)
+        criar_usuarios(caminho_arquivo_membros)
+
+        ImportacaoDado.create!(usuario: usuario_atual)
+
+      end 
 
       redirect_to admin_path, notice: "Dados atualizados com sucesso!" and return
 
     # 3) Já existem dados de disciplinas, turmas e discentes no banco?
     
-    elsif Disciplina.exists? || Turma.exists? || Usuario.where(e_admin: false).exists?
+    elsif ImportacaoDado.exists?
       redirect_to admin_path(confirmacao: true) and return
 
     else
-      criar_disciplinas_turmas(caminho_arquivo_disciplinas)
-      criar_usuarios(caminho_arquivo_membros)
+
+      ActiveRecord::Base.transaction do
+        criar_disciplinas_turmas(caminho_arquivo_disciplinas)
+        criar_usuarios(caminho_arquivo_membros)
+        ImportacaoDado.create!(usuario: usuario_atual)
+      end
 
       redirect_to admin_path, notice: "Dados importados com sucesso!" and return
     end

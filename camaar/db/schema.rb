@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_25_004034) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_11_215834) do
   create_table "disciplinas", force: :cascade do |t|
     t.string "codigo", null: false
     t.string "nome", null: false
@@ -33,6 +33,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_25_004034) do
     t.integer "formulario_id", null: false
     t.index ["formulario_id", "usuario_id"], name: "index_formularios_usuarios_on_formulario_id_and_usuario_id"
     t.index ["usuario_id", "formulario_id"], name: "index_formularios_usuarios_on_usuario_id_and_formulario_id"
+  end
+
+  create_table "importacao_dados", force: :cascade do |t|
+    t.integer "usuario_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["usuario_id"], name: "index_importacao_dados_on_usuario_id"
   end
 
   create_table "opcaos", force: :cascade do |t|
@@ -117,6 +124,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_25_004034) do
   end
 
   add_foreign_key "formularios", "turmas"
+  add_foreign_key "importacao_dados", "usuarios"
   add_foreign_key "opcaos", "questaos"
   add_foreign_key "questaos", "formularios"
   add_foreign_key "questaos", "templates"

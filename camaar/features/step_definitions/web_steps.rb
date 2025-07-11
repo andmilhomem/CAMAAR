@@ -236,8 +236,8 @@ Dado("que já existem turmas, matérias e participantes cadastrados") do
   )
   
   @disciplina = Disciplina.create!(
-  codigo: "CIC0097",
-  nome: "BANCO DE DADOS"
+  codigo: "CIC0012",
+  nome: "COMPUTAÇÃO QUÂNTICA"
   )
 
   @turma = Turma.create!(
@@ -246,6 +246,8 @@ Dado("que já existem turmas, matérias e participantes cadastrados") do
   horario: "35T45",
   disciplina: @disciplina
   )
+
+  ImportacaoDado.create!(usuario: @admin)
 end
 
 Dado("que existe uma turma \"BANCO DE DADOS\"") do
@@ -320,9 +322,7 @@ Dado("que o formulário da turma \"BANCO DE DADOS\" ainda não recebeu respostas
 end
 
 Dado("que ainda não existem turmas, matérias e participantes cadastrados") do
-  Turma.destroy_all
-  Disciplina.destroy_all
-  Usuario.where(ocupacao: "discente").destroy_all
+  ImportacaoDado.exists?
 end
 
 Dado("que os dados estão disponíveis para importação") do

@@ -80,7 +80,7 @@ puts "usuario de teste: #{u.id}"
 
 # 2) disciplina
 d = Disciplina.find_or_create_by!(codigo: 'DISC-01') do |disc|
-  disc.nome = 'Teste de Disciplina'
+  disc.nome = 'Estrutura de Dados'
 end
 
 # 3) turma
@@ -101,7 +101,7 @@ end
 puts "Formulario: #{f.id} (Turma #{t.codigo})"
 
 # 6) questoes
-q1 = Questao.find_or_create_by!(formulario: f, template: tm, num_questao: 1) do |q|
+Questao.find_or_create_by!(formulario: f, template: tm, num_questao: 1) do |q|
   q.tipo      = 'Texto'
   q.enunciado = 'Como voce avalia este teste?'
 end

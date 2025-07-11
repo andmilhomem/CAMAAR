@@ -2,6 +2,8 @@ class Usuario < ApplicationRecord
   has_secure_password
   has_and_belongs_to_many :formularios
   has_and_belongs_to_many :turmas
+  has_many :importacao_dados
+
 
   PASSWORD_REQUIREMENTS = /\A
     (?=.{8,})           # Deve ter no mínimo 8 caracteres

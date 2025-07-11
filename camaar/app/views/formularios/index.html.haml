@@ -1,2 +1,18 @@
-%h1 Formularios#index
-%p Find me in app/views/formularios/index.html.haml
+%h1 Avaliações pendentes
+
+- if @tem_formularios
+  .lista-formularios
+    - @formularios.each do |form|
+      .card-formulario
+        .card-header
+          %h2= form.turma.disciplina.nome
+        .card-body
+          %p
+            %strong Turma:
+            = " #{form.turma.codigo} (#{form.turma.semestre})"
+        .card-footer
+          = link_to "Responder", new_resposta_formulario_path(formulario_id: form.id),
+                    class: "botao-responder"
+- else
+  .empty-state
+    %p Nenhum formulário disponível para resposta

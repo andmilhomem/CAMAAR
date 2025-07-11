@@ -75,3 +75,4 @@ group :development, :test do
   gem 'factory_bot_rails' # Permite criar instâncias de entidades no banco para testes RSPec
   gem 'rails-controller-testing'
 end
+

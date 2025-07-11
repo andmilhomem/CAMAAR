@@ -1,29 +1,44 @@
 require 'rails_helper'
 
-=begin Testes nativos do RSpec
-
 RSpec.describe "Formularios", type: :request do
-  describe "GET /index" do
-    it "returns http success" do
-      get "/formularios/index"
-      expect(response).to have_http_status(:success)
-    end
+  let!(:usuario)    { create(:usuario, :admin, password: "Senh@123", password_confirmation: "Senh@123") }
+  let!(:disciplina) { create(:disciplina) }
+  let!(:turma)      { create(:turma, disciplina: disciplina) }
+
+  before do
+    # faz login "real" para popular session[:usuario_id]
+    post login_path, params: { email: usuario.email, senha: "Senh@123" }
+    usuario.turmas << turma
   end
 
-  describe "GET /new" do
-    it "returns http success" do
-      get "/formularios/new"
-      expect(response).to have_http_status(:success)
+  describe "GET /formularios" do
+    context "quando ha formularios pendentes" do
+      let!(:formularios) { create_list(:formulario, 3, turma: turma) }
+
+      it "retorna sucesso e exibe cards em grid" do
+        get formularios_path
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to match(/class=['"]lista-formularios['"]/)
+
+        formularios.each do |f|
+          expect(response.body).to include(f.turma.disciplina.nome)
+          expect(response.body).to include("#{f.turma.codigo} (#{f.turma.semestre})")
+        end
+
+        expect(response.body).not_to include("Nenhum formulário disponível para resposta")
+      end
+    end
+
+    context "quando nao ha formularios pendentes" do
+      it "mostra mensagem de estado vazio" do
+        # sem formularios criados para essa turma
+        get formularios_path
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to match(/class=['"]empty-state['"]/)
+        expect(response.body).to include("Nenhum formulário disponível para resposta")
+      end
     end
   end
-
-  describe "GET /create" do
-    it "returns http success" do
-      get "/formularios/create"
-      expect(response).to have_http_status(:success)
-    end
-  end
-
 end
-
-=end

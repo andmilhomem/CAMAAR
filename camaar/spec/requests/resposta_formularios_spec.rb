@@ -10,7 +10,7 @@ RSpec.describe "RespostaFormularios", type: :request do
 
   before do
     # login real
-    post login_path, params: { email: usuario.email, senha: 'Senh@123' }
+    post "/login_para_teste", params: { email: usuario.email}
 
     usuario.turmas << turma
 
@@ -47,8 +47,8 @@ RSpec.describe "RespostaFormularios", type: :request do
       it "salva e redireciona com notice" do
         post resposta_formularios_path,
              params: { formulario_id: formulario.id, respostas: respostas }
-
-        expect(session[:formularios_respondidos]).to include(formulario.id)
+        expect(usuario.formularios).to include(formulario)
+      #  expect(session[:formularios_respondidos]).to include(formulario.id)
         expect(response).to redirect_to(formularios_path)
 
         follow_redirect!

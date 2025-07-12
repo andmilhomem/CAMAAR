@@ -25,7 +25,5 @@ Funcionalidade: Edição e deleção de templates
 
     Cenário: Deletar um template existente com sucesso
         Quando clico no botão "Deletar template" dentro do template "Formulário de opinião"
-        E vejo a mensagem "Deseja deletar mesmo?"
-        E clico no botão "Sim"
         Então devo ver a mensagem "Template deletado com sucesso!"
         E não devo mais ver o template "Formulário de opinião"

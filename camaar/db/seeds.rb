@@ -167,3 +167,28 @@ total = Formulario.where(turma: turma).count
 puts "total de formularios na turma #{turma.id}: #{total}"
 
 puts 'fluxo de seed para formularios carregado com sucesso'
+
+
+##### SEEDS PARA FEATURE/TEMPLATE #####
+
+# Criação de templates de exemplo
+exemplos = [
+  { nome: 'Avaliação Docente 2024.1', data_versao: Time.now },
+  { nome: 'Feedback de Curso - Computação', data_versao: Time.now - 1.day },
+  { nome: 'Pesquisa de Satisfação', data_versao: Time.now - 2.days }
+]
+
+exemplos.each do |attrs|
+  Template.find_or_create_by!(nome: attrs[:nome]) do |t|
+    t.data_versao = attrs[:data_versao]
+  end
+end
+
+# Criação de template para testes cucumber
+unless Template.exists?(nome: 'Formulário de opinião')
+  template2 = Template.create!(nome: 'Formulário de opinião')
+  template2.questaos.create!(num_questao: 1, tipo: 'Texto', enunciado: 'O que você achou da disciplina?')
+  template2.questaos.create!(num_questao: 2, tipo: 'Texto', enunciado: 'Sugestões para o professor')
+end
+
+puts 'Templates de exemplo criados!'

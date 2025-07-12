@@ -26,18 +26,13 @@ class AdminController < ApplicationController
     # 2) O usuário já autorizou a sobrescrita de dados (parâmetro sobrescrever: true)?
     
     if params[:sobrescrever] == "true"
-      
-      ActiveRecord::Base.transaction do
+      Disciplina.destroy_all
+      Usuario.where(e_admin: false).destroy_all
 
-        Disciplina.destroy_all
-        Usuario.where(e_admin: false).destroy_all
+      criar_disciplinas_turmas(caminho_arquivo_disciplinas)
+      criar_usuarios(caminho_arquivo_membros)
 
-        criar_disciplinas_turmas(caminho_arquivo_disciplinas)
-        criar_usuarios(caminho_arquivo_membros)
-
-        ImportacaoDado.create!(usuario: usuario_atual)
-
-      end 
+      ImportacaoDado.create!(usuario: usuario_atual)
 
       redirect_to admin_path, notice: "Dados atualizados com sucesso!" and return
 
@@ -47,13 +42,10 @@ class AdminController < ApplicationController
       redirect_to admin_path(confirmacao: true) and return
 
     else
-
-      ActiveRecord::Base.transaction do
-        criar_disciplinas_turmas(caminho_arquivo_disciplinas)
-        criar_usuarios(caminho_arquivo_membros)
-        ImportacaoDado.create!(usuario: usuario_atual)
-      end
-
+      criar_disciplinas_turmas(caminho_arquivo_disciplinas)
+      criar_usuarios(caminho_arquivo_membros)
+      ImportacaoDado.create!(usuario: usuario_atual)
+      
       redirect_to admin_path, notice: "Dados importados com sucesso!" and return
     end
   end

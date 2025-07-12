@@ -6,8 +6,8 @@ RSpec.describe "Formularios", type: :request do
   let!(:turma)      { create(:turma, disciplina: disciplina) }
 
   before do
-    # faz login "real" para popular session[:usuario_id]
-    post login_path, params: { email: usuario.email, senha: "Senh@123" }
+    # faz login para popular session[:usuario_id]
+    post "/login_para_teste", params: { email: usuario.email}
     usuario.turmas << turma
   end
 

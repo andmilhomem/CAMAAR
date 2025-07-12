@@ -79,7 +79,13 @@ end
 
 Quando("clico no botão {string} dentro do template {string}") do |nome_botao, nome_template|
   within("[data-nome='#{nome_template}']") do
-    click_button(nome_botao)
+    if nome_botao == "Editar template"
+      click_link("✏️")
+    elsif nome_botao == "Deletar template"
+      click_button("🗑️")
+    else
+      click_button(nome_botao)
+    end
   end
 end
 
@@ -145,12 +151,18 @@ Então("não devo mais ver o template {string}") do |nome_template|
 end
 
 Então("não devo ver nenhum template") do
-  expect(page).not_to have_button("Editar template")
-  expect(page).not_to have_button("Deletar template")
+  expect(page).not_to have_link("✏️")
+  expect(page).not_to have_button("🗑️")
 end
 
 Então('devo ver o botão {string}') do |nome_botao|
-  expect(page).to have_button(nome_botao)
+  if nome_botao == "Editar template"
+    expect(page).to have_link("✏️")
+  elsif nome_botao == "Deletar template"
+    expect(page).to have_button("🗑️")
+  else
+    expect(page).to have_button(nome_botao)
+  end
 end
 
 Quando("clico no link de redefinição de senha recebido por e-mail") do
@@ -281,17 +293,25 @@ Dado("que não existem turmas cadastradas") do
 end
 
 Dado("que existe um template previamente criado com o nome \"Formulário de opinião\"") do
+  # Limpar templates existentes com o mesmo nome para evitar conflitos
+  Template.where(nome: "Formulário de opinião").destroy_all
+  
   @template = Template.create!(
-  nome: "Formulário de opinião",
-  data_versao: Time.current
+    nome: "Formulário de opinião",
+    data_versao: Time.current
   ) 
 
   Questao.create!(
-  num_questao: 1,
-  tipo: "Texto",
-  enunciado: "Qual sua linguagem favorita?",
-  template: @template
-)
+    num_questao: 1,
+    tipo: "Texto",
+    enunciado: "Qual sua linguagem favorita?",
+    template: @template
+  )
+  
+  # Verificar se o template foi criado corretamente
+  expect(@template).to be_persisted
+  expect(@template.nome).to eq("Formulário de opinião")
+  expect(Template.find_by(nome: "Formulário de opinião")).to be_present
 end
 
 Dado("que foi criado um formulário para a turma \"BANCO DE DADOS\"") do
@@ -418,20 +438,37 @@ Dado("que não existem formulários cadastrados") do
 end
 
 Dado("que existem templates previamente criados com os nomes \"Avaliação discente 1\" e \"Avaliação docente 1\"") do
+  # Limpar templates existentes para evitar conflitos
+  Template.where(nome: ["Avaliação discente 1", "Avaliação docente 1"]).delete_all
+  
   Template.create!(
-  nome: "Avaliação discente 1",
-  data_versao: Time.current
+    nome: "Avaliação discente 1",
+    data_versao: Time.current
   )
 
   Template.create!(
-  nome: "Avaliação docente 1",
-  data_versao: Time.current
-  )         
+    nome: "Avaliação docente 1",
+    data_versao: Time.current
+  )
+  
+  # Verificar se os templates foram criados corretamente
+  expect(Template.find_by(nome: "Avaliação discente 1")).to be_present
+  expect(Template.find_by(nome: "Avaliação docente 1")).to be_present
+  
+  # Se estivermos em uma página, recarregar para garantir que os templates apareçam
+  if page.current_path.present?
+    visit current_path
+  end
 end
 
 Então("devo ver os templates \"Avaliação discente 1\" e \"Avaliação docente 1\"") do
+  # Aguarda os templates aparecerem na página
   expect(page).to have_content("Avaliação discente 1")
   expect(page).to have_content("Avaliação docente 1")
+  
+  # Verifica se os templates estão visíveis como cards
+  expect(page).to have_selector('.template-card', text: /Avaliação discente 1/)
+  expect(page).to have_selector('.template-card', text: /Avaliação docente 1/)
 end  
 
 Dado("que não existe nenhum template previamente criado") do

@@ -32,6 +32,8 @@ class TemplatesController < ApplicationController
 
   def update
     @template = Template.find(params[:id])
+    @template.questaos.destroy_all # Apaga as questões antigas para evitar duplicidade
+
     if @template.update(template_params)
       if request.xhr?
         render json: { success: true, redirect_url: templates_path }
@@ -50,7 +52,10 @@ class TemplatesController < ApplicationController
 
   def destroy
     @template = Template.find(params[:id])
-    @template.destroy
+    # Apaga questões (e dependentes) que não foram usadas por formulários
+    @template.questaos.where(formulario_id: nil).destroy_all
+    # Deleta apenas o template (não seus dependentes)
+    @template.delete
     redirect_to templates_path, notice: 'Template deletado com sucesso!'
   end
 

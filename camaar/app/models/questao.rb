@@ -1,5 +1,5 @@
 class Questao < ApplicationRecord
-  belongs_to :template
+  belongs_to :template, optional: true
   belongs_to :formulario, optional: true
   has_many :opcaos, dependent: :destroy
   validates :num_questao, presence: true

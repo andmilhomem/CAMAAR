@@ -18,7 +18,9 @@ class ApplicationController < ActionController::Base
   end
 
   def requerer_login
-    redirect_to login_path, alert: "Você precisa estar logado!" unless usuario_logado?
+    return if usuario_logado?
+    flash[:alert] = "Você precisa estar logado!" unless request.path == "/"
+    redirect_to login_path
   end
 
   def requerer_usuario_ativo

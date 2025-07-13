@@ -20,16 +20,19 @@
         .footer-row
           %button.create-btn{ type: 'submit', form: 'formulario' } Salvar
 
+%div#perguntas-data{ data: { perguntas: @template.questaos.map { |q|
+  {
+    tipo: q.tipo.downcase,
+    titulo: q.enunciado,
+    opcoes: q.tipo.downcase == 'radio' ? q.opcaos.map(&:texto_opcao) : []
+  }
+}.to_json } }
+
 :javascript
   let contadorPerguntas = 0;
   function preencherPerguntasExistentes() {
-    const perguntas = #{(@template.questaos.map do |q|
-      {
-        tipo: q.tipo.downcase,
-        titulo: q.enunciado,
-        opcoes: q.tipo.downcase == 'radio' ? q.opcaos.map(&:texto_opcao) : []
-      }
-    end).to_json.html_safe};
+    const dataDiv = document.getElementById('perguntas-data');
+    const perguntas = dataDiv ? JSON.parse(dataDiv.dataset.perguntas) : [];
     perguntas.forEach((pergunta, idx) => {
       adicionarPergunta(pergunta, idx === 0);
     });

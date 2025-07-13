@@ -21,11 +21,11 @@ Funcionalidade: Sistema de definição de senha
         E preencho o campo "Repita sua Nova Senha" com o valor "123456"
         E clico no botão "Salvar Nova Senha"
         Então devo ir para a página "Redefinição de senha"
-        E devo ver a mensagem "Formato de senha inválido!"
+        E devo ver a mensagem "Password deve conter no mínimo 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial."
 
     Cenário: Senhas diferentes
         Quando preencho o campo "Nova Senha" com o valor "12ABcd$$"
         Mas preencho o campo "Repita sua Nova Senha" com o valor "12abCD$$"
         E clico no botão "Salvar Nova Senha"
-        Então devo ver a mensagem "Senhas diferentes!"
+        Então devo ver a mensagem "Password confirmation doesn't match Password"
   

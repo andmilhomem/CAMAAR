@@ -192,3 +192,27 @@ unless Template.exists?(nome: 'Formulário de opinião')
 end
 
 puts 'Templates de exemplo criados!'
+
+#### SEEDS PARA FEATURE/FORMULARIO ####
+
+# Cria 2 respostas para 1 formulário (criado acima)
+
+# cria uma resposta ao formulário f
+resposta = RespostaFormulario.create!(
+  formulario: f,
+  data_resposta: Time.current
+)
+
+# adiciona resposta à questão 1 (num_questao: 1)
+resposta.resposta_questaos.create!(
+  num_questao: 1,
+  texto_resposta: 'Bom'
+)
+
+# adiciona resposta à questão 2 (num_questao: 2)
+resposta.resposta_questaos.create!(
+  num_questao: 2,
+  texto_resposta: 'Sim'
+)
+
+puts "Resposta criada para o formulário ##{f.id}: [Bom, Sim]"

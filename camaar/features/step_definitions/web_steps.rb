@@ -88,6 +88,10 @@ Quando("clico no botão {string} dentro do template {string}") do |nome_botao, n
   end
 end
 
+Quando('clico no card do formulário da turma {string}') do |nome_disciplina|
+  find("a[data-nome='#{nome_disciplina}']").click
+end
+
 Quando('clico no formulário da turma {string}') do |nome_disciplina|
   within("[data-nome='#{nome_disciplina}']") do
     click_link
@@ -104,6 +108,10 @@ end
 
 Então("devo ir para a página {string}") do |nome_pagina|
   expect(page).to have_current_path(path_to(nome_pagina), ignore_query: true)
+end
+
+Então("devo ir para a página inicial") do
+  expect(page).to have_current_path("/")
 end
 
 Quando("clico no botão {string}") do |nome_botao|
@@ -229,6 +237,10 @@ Quando("preencho o campo \"Senha\" com a senha correspondente a esse usuário") 
   fill_in "Senha", with: @senha
 end
 
+Quando("preencho o campo \"Senha\" com qualquer valor") do
+  fill_in "Senha", with: "qualquervalor"
+end
+
 Quando("preencho o campo \"Senha\" com senha não correspondente a esse usuário") do
   fill_in "Senha", with: "nao_e_a_senha"
 end
@@ -330,8 +342,12 @@ Dado("que o formulário da turma \"BANCO DE DADOS\" já recebeu respostas") do
   )
 end
 
-Então("deve se iniciar o download de um arquivo CSV") do
-  expect(page.current_url).to include("formulario_id=#{@formulario.id}")
+Dado("que nenhum formulário foi respondido") do
+    RespostaFormulario.destroy_all
+end
+
+Então("devo requisitar o download do arquivo CSV correspondente") do
+  expect(page).to have_link(nil, href: resposta_formularios_path(form_id: @formulario.id))
 end
 
 Dado("que o formulário da turma \"BANCO DE DADOS\" ainda não recebeu respostas") do

@@ -1,2 +1,15 @@
-%h1 RespostaFormularios#index
-%p Find me in app/views/resposta_formularios/index.html.haml
+= stylesheet_link_tag "resposta_formulario.css"
+
+%h1 Gerenciamento - Resultados
+
+.container
+  - if @formularios&.any?
+    - @formularios.each do |form|
+      = link_to resposta_formularios_path(form_id: form.id), data: { nome: form.turma.disciplina.nome } do
+        .card
+          %div
+            %p.texto-destaque= form.turma.disciplina.nome
+            %p.semestre= form.turma.semestre
+          %p.texto-destaque= get_nome_professor(form.turma)
+  - else
+    %p Nenhum formulário respondido!

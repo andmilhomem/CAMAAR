@@ -12,16 +12,19 @@ Funcionalidade: Sistema de login
         Quando preencho o campo "Email" com um e-mail correspondente a um usuário cadastrado
         E preencho o campo "Senha" com a senha correspondente a esse usuário
         E clico no botão "Entrar"
-        Então devo ir para a página "Avaliações"
+        Então devo ir para a página inicial
 
     Cenário: Usuário não cadastrado
         Quando preencho o campo "Email" com um e-mail não correspondente a um usuário cadastrado
+        E preencho o campo "Senha" com qualquer valor
         E clico no botão "Entrar"
-        Então devo ver a mensagem "Email ou senha inválidos!"
+        Então devo permanecer na página "Login"
+        E devo ver a mensagem "Email ou senha inválidos!"
     
     Cenário: Senha incorreta
         Quando preencho o campo "Email" com um e-mail correspondente a um usuário cadastrado
         Mas preencho o campo "Senha" com senha não correspondente a esse usuário
         E clico no botão "Entrar"
+        Então devo permanecer na página "Login"
         Então devo ver a mensagem "Email ou senha inválidos!"
         

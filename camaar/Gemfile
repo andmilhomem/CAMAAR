@@ -64,7 +64,6 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem 'rails-controller-testing'
 end
 
 group :development, :test do
@@ -76,3 +75,5 @@ group :development, :test do
   gem 'rails-controller-testing'
 end
 
+# Explicita adição da gem apenas para evitar erros
+gem 'csv'

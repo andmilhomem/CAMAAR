@@ -9,12 +9,15 @@ Funcionalidade: Visualização de resultados dos formulários
         Dado que estou logado como administrador
         E que estou na página "Gerenciamento"
 
-    Cenário: Formulários cadastrados
+    Cenário: Formulários respondidos
         Dado que foi criado um formulário para a turma "BANCO DE DADOS"
+        E que o formulário da turma "BANCO DE DADOS" já recebeu respostas
         Quando clico no botão "Resultados"
-        Então devo ver o formulário da turma "BANCO DE DADOS"
+        Então devo ir para a página "Gerenciamento - Resultados"
+        E devo ver o formulário da turma "BANCO DE DADOS"
 
-    Cenário: Nenhum formulário cadastrado
-        Dado que não existem formulários cadastrados
+    Cenário: Nenhum formulário respondido
+        Dado que nenhum formulário foi respondido
         Quando clico no botão "Resultados"
-        Então devo ver a mensagem "Nenhum formulário cadastrado!"
+        Então devo ir para a página "Gerenciamento - Resultados"
+        E devo ver a mensagem "Nenhum formulário respondido!"

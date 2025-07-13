@@ -14,7 +14,6 @@ Dado("que estou logado como administrador") do
     password: 'M1nha$enha',
     password_confirmation: 'M1nha$enha'
   )
-
   page.set_rack_session(usuario_id: @admin.id)
 end
 
@@ -104,11 +103,11 @@ Então("devo permanecer na página {string}") do |nome_pagina|
 end
 
 Então("devo ir para a página {string}") do |nome_pagina|
-  expect(current_path).to eq path_to(nome_pagina)  
+  expect(page).to have_current_path(path_to(nome_pagina), ignore_query: true)
 end
 
 Quando("clico no botão {string}") do |nome_botao|
-  click_button(nome_botao)
+  click_on(nome_botao)
 end
 
 Quando('seleciono a opção {string} na caixa {string}') do |opcao, nome_caixa|
@@ -178,7 +177,8 @@ Quando("clico no link de redefinição de senha recebido por e-mail") do
     password: 'M1nha$enha',
     password_confirmation: 'M1nha$enha'
   )
-  visit login_path(email: usuario.email, senha: usuario.password_digest) # /login?email= ... &senha= ...
+  token = usuario.signed_id(purpose: "password_reset", expires_in: 60.minutes)
+  visit redefinir_senha_path(token: token) 
 end
 
 Quando("preencho o campo \"Email\" com um e-mail de usuário novo") do

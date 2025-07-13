@@ -4,7 +4,7 @@ Funcionalidade: Cadastrar usuários do sistema
         Eu como Administrador
         Quero cadastrar participantes de turmas do SIGAA ao importar dados de usuarios novos para o sistema
         A fim de que eles acessem o sistema CAMAAR
-   
+    
     Cenário: Redefinição de senha a partir da tela de login
         Dado que estou na página "Login"
         Quando preencho o campo "Email" com um e-mail de usuário novo

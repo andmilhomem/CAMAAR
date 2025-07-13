@@ -1,0 +1,6 @@
+<div id="side-menu" class="side-menu">
+  <%= link_to "Avaliações", formularios_path, class: "side-menu-link" %>
+  <% if usuario_atual.e_admin? %>
+    <%= link_to "Gerenciamento", admin_path, class: "side-menu-link" %>
+  <% end %>
+</div>

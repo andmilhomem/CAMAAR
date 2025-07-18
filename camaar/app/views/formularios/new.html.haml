@@ -1,2 +1,25 @@
-%h1 Formularios#new
-%p Find me in app/views/formularios/new.html.haml
+= stylesheet_link_tag 'cria-formulario.css'
+
+= form_with url: formularios_path,
+    method: :post do
+        
+    .templateSelector
+        %label Template:
+        = select_tag :template_id, 
+                    options_for_select(@template_options, nil),
+                    include_blank: "Template"
+    %table 
+        %thead
+            %tr
+                %td
+                %td Nome
+                %td Semestre
+                %td Código
+        %tbody
+            - @turmas.each do |turma|
+                %tr
+                    %td= checkbox_tag "turma_ids[]", turma.id
+                    %td= turma.disciplina.nome
+                    %td= turma.semestre
+                    %td= turma.disciplina.codigo 
+    = submit_tag "Enviar"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_11_215834) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_18_210427) do
   create_table "disciplinas", force: :cascade do |t|
     t.string "codigo", null: false
     t.string "nome", null: false
@@ -55,7 +55,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_11_215834) do
     t.integer "num_questao", null: false
     t.string "tipo", null: false
     t.string "enunciado", null: false
-    t.integer "template_id", null: false
+    t.integer "template_id"
     t.integer "formulario_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

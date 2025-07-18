@@ -58,12 +58,14 @@ group :development do
   gem "web-console"
   # Permite visualizar emails enviados em painel
   gem 'letter_opener_web'
+  gem 'rdoc', require: false # Para documentação do código
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem 'simplecov', require: false # Para análise de cobertura de testes
 end
 
 group :development, :test do
@@ -73,6 +75,7 @@ group :development, :test do
   gem 'rack_session_access' # Permite manipular session no BDD
   gem 'factory_bot_rails' # Permite criar instâncias de entidades no banco para testes RSPec
   gem 'rails-controller-testing'
+  gem 'rubycritic', require: false # Para análise de refatoração
 end
 
 # Explicita adição da gem apenas para evitar erros

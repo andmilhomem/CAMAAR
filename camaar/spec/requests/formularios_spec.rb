@@ -4,6 +4,8 @@ RSpec.describe "Formularios", type: :request do
   let!(:usuario)    { create(:usuario, :admin, password: "Senh@123", password_confirmation: "Senh@123") }
   let!(:disciplina) { create(:disciplina) }
   let!(:turma)      { create(:turma, disciplina: disciplina) }
+  let!(:template) {create(:template, :com_duas_questoes)}
+
 
   before do
     # faz login para popular session[:usuario_id]
@@ -38,6 +40,87 @@ RSpec.describe "Formularios", type: :request do
         expect(response).to have_http_status(:success)
         expect(response.body).to match(/class=['"]empty-state['"]/)
         expect(response.body).to include("Nenhum formulário disponível para resposta")
+      end
+    end
+  end
+
+  describe "GET /formularios/new" do
+    context "quando há templates e turmas disponíveis" do
+      let!(:turma2) {create(:turma)}
+      let!(:template2) {create(:template, :com_duas_questoes)}
+      let!(:template3) {create(:template, :com_duas_questoes)}
+
+      it "retorna sucesso e exibe turmas disponiveis" do
+        get "/formularios/new"
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include turma.disciplina.nome
+        expect(response.body).to include turma2.disciplina.nome
+        expect(response.body.scan('type="checkbox"').size).to equal 2
+      end
+
+      it "exibe templates disponíveis em um dropdown" do
+        get "/formularios/new"
+        expect(response.body).to include "<select"
+        expect(response.body).to match /\<option.*\>#{template.nome}/
+        expect(response.body).to match /\<option.*\>#{template2.nome}/
+        expect(response.body).to match /\<option.*\>#{template3.nome}/
+      end
+    end
+  end
+
+  describe 'POST /formularios' do
+    context 'com parâmetros válidos' do
+      it 'cria novos formulários para as turmas selecionadas' do
+        expect {
+          post "/formularios", params: { turma_ids: [turma.id], template_id: template.id }
+        }.to change(Formulario, :count).by(1)
+      end
+
+      it 'copia questões do template para cada formulário' do
+        expect {
+          post "/formularios", params: { turma_ids: [turma.id], template_id: template.id }
+        }.to change(Questao, :count).by(2)
+      end
+
+      it 'copia opções para questões do tipo rádio' do
+        expect {
+          post "/formularios", params: { turma_ids: [turma.id], template_id: template.id }
+        }.to change(Opcao, :count).by(2)
+      end
+
+      it 'define o formulario_id nas questões copiadas' do
+        post "/formularios", params: { turma_ids: [turma.id], template_id: template.id }
+        expect(Questao.last.formulario_id).to eq(Formulario.last.id)
+      end
+
+      it 'redireciona para formularios_path com mensagem de sucesso' do
+        post "/formularios", params: { turma_ids: [turma.id], template_id: template.id }
+        expect(response).to redirect_to(formularios_path)
+        expect(flash[:notice]).to be_present
+      end
+    end
+
+    context 'com múltiplas turmas' do
+      let(:turma2) { create(:turma, disciplina: disciplina) }
+
+      it 'cria formulários para cada turma selecionada' do
+        expect {
+          post "/formularios", params: { turma_ids: [turma.id, turma2.id], template_id: template.id }
+        }.to change(Formulario, :count).by(2)
+      end
+    end
+
+    context 'com parâmetros inválidos' do
+      it 'redireciona quando nenhum template é selecionado' do
+        post "/formularios", params: { turma_ids: [turma.id], template_id: nil }
+        expect(response).to redirect_to(new_formulario_path)
+        expect(flash[:alert]).to eq('Selecione um template')
+      end
+
+      it 'redireciona quando nenhuma turma é selecionada' do
+        post "/formularios", params: { turma_ids: nil, template_id: template.id }
+        expect(response).to redirect_to(new_formulario_path)
+        expect(flash[:alert]).to eq('Selecione ao menos uma turma')
       end
     end
   end

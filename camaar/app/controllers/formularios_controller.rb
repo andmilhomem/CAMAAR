@@ -25,10 +25,10 @@ class FormulariosController < ApplicationController
   def create
     turmas_selecionadas = params[:turma_ids]
     template_id = params[:template_id]
-    if not template_id.present?
+    if template_id.blank?
       redirect_to new_formulario_path, alert: "Selecione um template" and return
     end
-    if not turmas_selecionadas.present?
+    if turmas_selecionadas.blank?
       redirect_to new_formulario_path, alert: "Selecione ao menos uma turma" and return
     end
 

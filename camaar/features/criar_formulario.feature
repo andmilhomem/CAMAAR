@@ -35,7 +35,8 @@ Funcionalidade: Criar formulário de avaliação
         Então devo ver a mensagem "Nenhum template disponível!"
 
     Cenário: Nenhuma turma cadastrada
-        Dado que não existem turmas cadastradas
+        Dado que existe um template "Avaliação Discente 1"
+        E que não existem turmas cadastradas
         E que estou na página "Gerenciamento"
         Quando clico no botão "Enviar formulários"
         Então devo ver a mensagem "Nenhuma turma disponível!"

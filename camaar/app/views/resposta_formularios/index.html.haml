@@ -1,6 +1,6 @@
 = stylesheet_link_tag "resposta_formulario.css"
 
-.container
+.lista-respostas
   - if @formularios&.any?
     - @formularios.each do |form|
       = link_to resposta_formularios_path(form_id: form.id), data: { nome: form.turma.disciplina.nome } do

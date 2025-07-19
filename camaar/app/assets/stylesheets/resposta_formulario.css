@@ -1,13 +1,14 @@
 body.resposta_formularios-index * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
 body.resposta_formularios-index {
   display: block;
 
-  .container {
+  .lista-respostas {
     display: grid;
     padding: 25px 46px;
     grid-template-columns: repeat(auto-fill, 278px);

@@ -23,10 +23,10 @@ class FormulariosController < ApplicationController
     @template_options = @templates.map do |template| [template.nome, template.id] end
     @turmas = Turma.all
 
-    if @turmas.blank?
-      redirect_to admin_path, alert: "Nenhuma turma disponível!" and return
-    elsif @templates.blank?
+    if @templates.blank?
       redirect_to admin_path, alert: "Nenhum template disponível!" and return 
+    elsif @turmas.blank?
+      redirect_to admin_path, alert: "Nenhuma turma disponível!" and return
     end
   end
 

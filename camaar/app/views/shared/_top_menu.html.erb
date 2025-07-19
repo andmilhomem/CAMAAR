@@ -1,0 +1,20 @@
+<nav id="top-menu" class="top-menu">
+  <div class="top-menu-left">
+    <button id="top-menu-toggle" class="top-menu-hamburger" title="Menu">
+      &#9776;
+    </button>
+    <span class="top-menu-page-name">
+      <%= nome_da_pagina %>
+    </span>
+  </div>
+  <div class="top-menu-right">
+    <span class="top-menu-user-name">
+      <%= usuario_atual&.nome %>
+    </span>
+    <%= form_with url: logout_path, method: :delete, local: true, html: { class: "top-menu-logout-form" } do %>
+      <button type="submit" class="top-menu-logout" title="Sair" aria-label="Logout">
+        ⏻
+      </button>
+    <% end %>
+  </div>
+</nav>

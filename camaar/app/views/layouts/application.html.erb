@@ -26,15 +26,22 @@
 
   </head>
 
-<body class="<%= "#{controller_name}-#{action_name}" %>">   
-    <%= render "shared/flash" %>
-    <div id="flash-container" class="toast-container">
-      <% flash.each do |type, msg| %>
-        <div class="toast" data-flash-type="<%= type %>"><%= msg %></div>
-      <% end %>
-    </div>
+<body class="<%= "#{controller_name}-#{action_name}" %>">
 
-    <%= yield %>
+  <% unless request.path.in?([login_path, redefinir_senha_path]) %>
+    <%= render 'shared/top_menu' %>
+    <%= render 'shared/side_menu' %>
+  <% end %>
+
+  <%= render "shared/flash" %>
+  
+  <div id="flash-container" class="toast-container">
+    <% flash.each do |type, msg| %>
+      <div class="toast" data-flash-type="<%= type %>"><%= msg %></div>
+    <% end %>
+  </div>
+
+  <%= yield %>
 </body>
 
 </html>

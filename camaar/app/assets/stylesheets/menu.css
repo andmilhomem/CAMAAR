@@ -1,0 +1,115 @@
+/* === Top Menu === */
+#top-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background-color: white;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 1000;
+  font-family: Arial, sans-serif;
+}
+
+/* Garante que o conteúdo não fique atrás do top menu */
+body {
+  padding-top: 50px;
+}
+
+/* Botão hamburguer */
+.top-menu-hamburger {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+/* Nome da página */
+.top-menu-page-name {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Alinhamento à direita: nome do usuário + logout lado a lado */
+.top-menu-right {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* espaçamento entre nome e botão logout */
+}
+
+/* Nome do usuário */
+.top-menu-user-name {
+  font-size: 16px;
+}
+
+/* Form do logout sem margem extra */
+.top-menu-logout-form {
+  margin: 0;
+}
+
+/* Botão logout */
+.top-menu-logout {
+  font-size: 20px;
+  color: black;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.top-menu-logout:hover {
+  color: red;
+}
+
+/* === Side Menu === */
+#side-menu {
+  position: fixed;
+  top: 50px; /* abaixo do top menu */
+  left: 0;
+  width: 200px;
+  bottom: 0;
+  background-color: white;
+  color: black;
+  padding: 15px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  overflow-y: auto;
+  z-index: 900;
+  font-family: Arial, sans-serif;
+
+  /* começa fechado */
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+/* Classe que abre o side menu */
+#side-menu.open {
+  transform: translateX(0);
+}
+
+/* Links do side menu */
+#side-menu a {
+  display: block;
+  color: black;
+  text-decoration: none;
+  padding: 8px 5px;
+  border-radius: 3px;
+  margin-bottom: 5px;
+}
+
+#side-menu a:hover,
+#side-menu a.active {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+/* === Main content === */
+main {
+  padding: 20px;
+}

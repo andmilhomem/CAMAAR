@@ -8,7 +8,7 @@ body.resposta_formularios-index * {
 body.resposta_formularios-index {
   display: block;
 
-  .lista {
+  .lista-respostas {
     display: grid;
     padding: 25px 46px;
     grid-template-columns: repeat(auto-fill, 278px);

@@ -4,10 +4,12 @@
     method: :post do
         
     .templateSelector
-        %label Template:
+        %label{for: "template_id"} Template:
         = select_tag :template_id, 
                     options_for_select(@template_options, nil),
-                    include_blank: "Template"
+                    include_blank: "Template",
+                    id: "template_id"
+
     %table 
         %thead
             %tr

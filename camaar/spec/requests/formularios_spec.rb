@@ -45,6 +45,23 @@ RSpec.describe "Formularios", type: :request do
   end
 
   describe "GET /formularios/new" do
+    context "quando não há templates ou turmas disponíveis" do
+      
+      it "redireciona para tela de admin com mensagem de erro" do
+        Turma.destroy_all
+        get "/formularios/new"
+        expect(response).to redirect_to(admin_path)
+        expect(flash[:alert]).to eql "Nenhuma turma disponível!"
+      end
+
+      it "redireciona para tela de admin com mensagem de erro" do
+        Template.destroy_all
+        get "/formularios/new"
+        expect(response).to redirect_to(admin_path)
+        expect(flash[:alert]).to eql "Nenhum template disponível!"
+      end
+    end
+
     context "quando há templates e turmas disponíveis" do
       let!(:turma2) {create(:turma)}
       let!(:template2) {create(:template, :com_duas_questoes)}
@@ -114,13 +131,13 @@ RSpec.describe "Formularios", type: :request do
       it 'redireciona quando nenhum template é selecionado' do
         post "/formularios", params: { turma_ids: [turma.id], template_id: nil }
         expect(response).to redirect_to(new_formulario_path)
-        expect(flash[:alert]).to eq('Selecione um template')
+        expect(flash[:alert]).to eq('Preencha todas as informações necessárias!')
       end
 
       it 'redireciona quando nenhuma turma é selecionada' do
         post "/formularios", params: { turma_ids: nil, template_id: template.id }
         expect(response).to redirect_to(new_formulario_path)
-        expect(flash[:alert]).to eq('Selecione ao menos uma turma')
+        expect(flash[:alert]).to eq('Preencha todas as informações necessárias!')
       end
     end
   end

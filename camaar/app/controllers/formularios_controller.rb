@@ -19,17 +19,22 @@ class FormulariosController < ApplicationController
   end
 
   def new
-    load_form_options
+    @templates = Template.all
+    @template_options = @templates.map do |template| [template.nome, template.id] end
+    @turmas = Turma.all
+
+    if @turmas.blank?
+      redirect_to admin_path, alert: "Nenhuma turma disponível!" and return
+    elsif @templates.blank?
+      redirect_to admin_path, alert: "Nenhum template disponível!" and return 
+    end
   end
 
   def create
     turmas_selecionadas = params[:turma_ids]
     template_id = params[:template_id]
-    if template_id.blank?
-      redirect_to new_formulario_path, alert: "Selecione um template" and return
-    end
-    if turmas_selecionadas.blank?
-      redirect_to new_formulario_path, alert: "Selecione ao menos uma turma" and return
+    if template_id.blank? or turmas_selecionadas.blank?
+      redirect_to new_formulario_path, alert: "Preencha todas as informações necessárias!" and return
     end
 
     formularios = []
@@ -54,16 +59,10 @@ class FormulariosController < ApplicationController
         end
       end
     end
-    redirect_to formularios_path, notice: formularios
+    redirect_to formularios_path, notice: "Formulário(s) criado(s) com sucesso!"
   end
 
   private
-
-  def load_form_options
-    @templates = Template.all
-    @template_options = @templates.map do |template| [template.nome, template.id] end
-    @turmas = Turma.all
-  end
 
   def formulario_params
     params.require(:formulario).permit(

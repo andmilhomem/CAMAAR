@@ -3,11 +3,11 @@
 .lista-respostas
   - if @formularios&.any?
     - @formularios.each do |form|
-      = link_to resposta_formularios_path(form_id: form.id), data: { nome: form.turma.disciplina.nome } do
+      = link_to resposta_formulario_path(form.id), data: { nome: form.turma.disciplina.nome } do
         .card
           %div
             %p.texto-destaque= form.turma.disciplina.nome
             %p.semestre= form.turma.semestre
-          %p.texto-destaque= get_nome_professor(form.turma)
+          %p.texto-destaque= form.turma.nome_professor
   - else
     %p Nenhum formulário respondido!

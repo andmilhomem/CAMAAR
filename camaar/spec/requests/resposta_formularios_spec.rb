@@ -141,7 +141,7 @@ RSpec.describe "RespostaFormularios", type: :request do
     end
   end
 
-  describe "GET /resposta_formularios com parâmetro form_id" do
+  describe "GET /show" do
     context "quando o formulário possui respostas" do
 
       before do
@@ -152,7 +152,7 @@ RSpec.describe "RespostaFormularios", type: :request do
       end
       
       it "deve realizar download do arquivo .csv" do
-        get "/resposta_formularios?form_id=#{@resposta_1.formulario_id}"
+        get "/resposta_formularios/#{@resposta_1.formulario_id}"
         expect(response.headers['Content-Disposition'])
           .to include ".csv"
         expect(response.headers['Content-Disposition'])
@@ -160,13 +160,13 @@ RSpec.describe "RespostaFormularios", type: :request do
       end
       
       it "arquivo deve ter cabeçalho" do
-        get "/resposta_formularios?form_id=#{@resposta_1.formulario_id}"
+        get "/resposta_formularios/#{@resposta_1.formulario_id}"
         primeira_linha = response.body.split("\n")[0]
         expect(primeira_linha).to eq "id,data_resposta,num_questao,texto_resposta"
       end
 
       it "arquivo deve mostrar APENAS respostas do formulario especificado" do
-        get "/resposta_formularios?form_id=#{@resposta_1.formulario_id}"
+        get "/resposta_formularios/#{@resposta_1.formulario_id}"
         resposta_questao = @resposta_1.resposta_questaos[0]
         expect(response.body)
           .to include "#{@resposta_1.id.to_s},#{@resposta_1.data_resposta},#{resposta_questao.num_questao.to_s},#{resposta_questao.texto_resposta}"

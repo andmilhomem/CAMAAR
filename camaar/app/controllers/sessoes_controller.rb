@@ -1,12 +1,37 @@
+##
+# Controller responsável pelas sessões de usuário (login, logout, etc)
+#
+# Métodos principais:
+# - new: Exibe o formulário de login
+# - create: Realiza o login do usuário
+# - destroy: Realiza o logout
+# - login_para_teste: Login especial para testes automatizados
+
 class SessoesController < ApplicationController
 
   skip_before_action :requerer_login, only: [:new, :create, :login_para_teste]
   skip_before_action :requerer_usuario_ativo, only: [:new, :create, :destroy, :login_para_teste]
 
+  ##
+  # Exibe o formulário de login para o usuário.
+  # GET /login
   def new
     # Apenas renderiza o formulário de login
   end
 
+  ##
+  # Realiza o login do usuário.
+  # POST /login
+  # Parâmetros:
+  # - email: Email do usuário
+  # - password: Senha do usuário
+  #
+  # Redireciona conforme o tipo e status do usuário:
+  # - Se não estiver ativo, redireciona para redefinir senha
+  # - Se for admin, redireciona para área administrativa
+  # - Caso contrário, redireciona para a página principal
+  #
+  # Em caso de erro, exibe mensagem de alerta
   def create
     usuario = Usuario.find_by(email: params[:email])
 
@@ -27,6 +52,10 @@ class SessoesController < ApplicationController
     end
   end
 
+  ##
+  # Realiza o logout do usuário.
+  # DELETE /logout
+  # Remove o usuário da sessão e redireciona para a tela de login.
   def destroy
     session[:usuario_id] = nil
     redirect_to login_path, notice: "Logout efetuado com sucesso!"
@@ -49,3 +78,4 @@ class SessoesController < ApplicationController
   end
 
 end
+

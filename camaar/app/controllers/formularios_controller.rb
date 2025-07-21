@@ -18,6 +18,15 @@ class FormulariosController < ApplicationController
     @tem_formularios = @formularios.any?
   end
 
+
+  ##
+  # Usuário precisa ser administrador.
+  #
+  # Busca os templates e as turmas disponíveis, redireciona o usuário para a tela de criação de
+  # um novo formulário
+  #
+  # Se não existir templates ou turmas disponíveis, o usuário é redirecionado para a tela de admin
+  # com a mensagem referente à o que não tem disponível
   def new
     @templates = Template.all
     @template_options = @templates.map do |template| [template.nome, template.id] end
@@ -30,6 +39,15 @@ class FormulariosController < ApplicationController
     end
   end
 
+  ##
+  # Usuário precisa ser administrador.
+  # 
+  # Cria um formulário para cada turma selecionada. O formulário terá as questões (e opções, se existir) duplicadas
+  # do template escolhido, para que não haja conflitos quando o template é atualizado ou removido. Após a criação do(s) formulário(s),
+  # o usuário é redirecionado para a listagem de formulários.
+  #
+  # Se o usuário não selecionar nenhum template, ou não selecionar nenhuma turma, o usuário continuará na tela de 
+  # criação de formulário e aparecerá uma mensagem de erro.
   def create
     turmas_selecionadas = params[:turma_ids]
     template_id = params[:template_id]

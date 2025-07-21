@@ -1,12 +1,21 @@
-require 'csv'
+##
+# Controladora das ações da model RespostaFormulario
 
 class RespostaFormulariosController < ApplicationController
-  before_action :requerer_admin, only: :index
+  before_action :requerer_admin, only: [:index, :show]
 
+  ##
+  # Usuário precisa ser administrador
+  #
+  # Busca os formularios respondidos e renderiza a página resposta_formularios/index.html.haml
   def index
     @formularios = Formulario.respondidos
   end
 
+  ##
+  # Usuário precisa ser administrador
+  #
+  # Gera um csv com as informações das respostas relacionadas ao formulario que foi selecionado
   def show
     formulario = Formulario.find_by_id params[:id]
     respostas_csv_service = RespostaFormulariosCsvService.new(formulario)

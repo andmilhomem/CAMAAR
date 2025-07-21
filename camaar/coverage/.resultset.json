@@ -1,18 +1,18 @@
 {
   "RSpec": {
     "coverage": {
-      "C:/Users/andmi/CAMAAR/camaar/app/helpers/admin_helper.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/helpers/admin_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/helpers/application_helper.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null,
           1,
-          17,
+          26,
           null,
           5,
           null,
@@ -24,7 +24,7 @@
           null,
           5,
           null,
-          1,
+          7,
           null,
           2,
           null,
@@ -32,16 +32,17 @@
           null,
           0,
           null,
-          0,
+          1,
           null,
-          0,
+          1,
           null,
-          0,
+          1,
+          null,
           null,
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/helpers/formularios_helper.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/helpers/formularios_helper.rb": {
         "lines": [
           1,
           1,
@@ -51,52 +52,35 @@
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/helpers/resposta_formularios_helper.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/helpers/resposta_formularios_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/helpers/senhas_helper.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/helpers/senhas_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/helpers/sessoes_helper.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/helpers/sessoes_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/helpers/templates_helper.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/helpers/templates_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/models/template.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/models/template.rb": {
         "lines": [
-          1,
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "C:/Users/andmi/CAMAAR/camaar/app/models/application_record.rb": {
-        "lines": [
-          1,
-          1,
-          null
-        ]
-      },
-      "C:/Users/andmi/CAMAAR/camaar/app/models/questao.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          1,
+          null,
+          null,
+          null,
           1,
           1,
           1,
@@ -104,7 +88,27 @@
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/models/opcao.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/models/application_record.rb": {
+        "lines": [
+          1,
+          1,
+          null
+        ]
+      },
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/models/questao.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/models/opcao.rb": {
         "lines": [
           1,
           1,
@@ -113,7 +117,7 @@
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/models/usuario.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/models/usuario.rb": {
         "lines": [
           1,
           1,
@@ -144,7 +148,7 @@
           null,
           null,
           null,
-          431,
+          452,
           null,
           null,
           1,
@@ -153,7 +157,7 @@
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/controllers/sessoes_controller.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/controllers/sessoes_controller.rb": {
         "lines": [
           1,
           null,
@@ -193,11 +197,11 @@
           null,
           null,
           1,
-          26,
+          47,
           null,
-          26,
-          26,
-          26,
+          47,
+          47,
+          47,
           null,
           0,
           0,
@@ -208,7 +212,7 @@
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/controllers/application_controller.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/controllers/application_controller.rb": {
         "lines": [
           1,
           null,
@@ -222,33 +226,34 @@
           1,
           null,
           1,
-          170,
+          280,
           null,
           null,
           1,
-          34,
+          57,
           null,
           null,
           1,
-          34,
+          57,
           0,
           0,
           null,
           null,
           1,
-          33,
+          56,
           0,
           null,
           null,
           null,
           1,
-          24,
+          47,
           3,
+          null,
           null,
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/controllers/admin_controller.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/controllers/admin_controller.rb": {
         "lines": [
           1,
           1,
@@ -388,7 +393,7 @@
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/controllers/formularios_controller.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/controllers/formularios_controller.rb": {
         "lines": [
           1,
           1,
@@ -430,7 +435,7 @@
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/models/turma.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/models/turma.rb": {
         "lines": [
           1,
           1,
@@ -438,10 +443,11 @@
           1,
           1,
           1,
-          1
+          1,
+          null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/models/formulario.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/models/formulario.rb": {
         "lines": [
           1,
           1,
@@ -453,15 +459,16 @@
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/models/disciplina.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/models/disciplina.rb": {
         "lines": [
           1,
           1,
           1,
-          1
+          1,
+          null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/models/importacao_dado.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/models/importacao_dado.rb": {
         "lines": [
           1,
           1,
@@ -469,7 +476,7 @@
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/mailers/usuario_mailer.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/mailers/usuario_mailer.rb": {
         "lines": [
           1,
           1,
@@ -477,10 +484,11 @@
           360,
           360,
           360,
+          null,
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/mailers/application_mailer.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/mailers/application_mailer.rb": {
         "lines": [
           1,
           1,
@@ -488,7 +496,7 @@
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/controllers/resposta_formularios_controller.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/controllers/resposta_formularios_controller.rb": {
         "lines": [
           1,
           null,
@@ -586,7 +594,7 @@
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/models/resposta_formulario.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/models/resposta_formulario.rb": {
         "lines": [
           1,
           1,
@@ -595,7 +603,7 @@
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/models/resposta_questao.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/models/resposta_questao.rb": {
         "lines": [
           1,
           1,
@@ -604,7 +612,7 @@
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/controllers/senhas_controller.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/controllers/senhas_controller.rb": {
         "lines": [
           null,
           1,
@@ -644,77 +652,91 @@
           1,
           null,
           3,
+          null,
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/controllers/templates_controller.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/controllers/templates_controller.rb": {
         "lines": [
+          null,
+          null,
+          1,
           1,
           1,
           null,
           1,
-          1,
+          5,
           null,
           null,
           1,
           null,
           null,
           1,
-          0,
-          0,
-          0,
-          0,
+          7,
           null,
-          0,
+          7,
+          4,
           null,
-          null,
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
+          3,
           null,
           null,
           null,
           1,
-          0,
           null,
           null,
           1,
-          0,
-          0,
+          5,
           null,
-          0,
-          0,
-          0,
+          5,
+          3,
           null,
-          0,
-          null,
-          null,
-          0,
-          0,
-          null,
-          0,
-          0,
-          null,
+          2,
           null,
           null,
           null,
           1,
-          0,
           null,
-          0,
-          null,
-          0,
-          0,
+          2,
+          2,
+          2,
           null,
           null,
           1,
           null,
           1,
+          11,
+          null,
+          null,
+          1,
+          7,
+          2,
+          null,
+          5,
+          null,
+          null,
+          null,
+          1,
+          5,
+          2,
+          null,
+          3,
+          null,
+          3,
+          2,
+          1,
+          1,
+          null,
           0,
           null,
+          null,
+          null,
+          null,
+          1,
+          12,
+          null,
+          null,
+          1,
+          12,
           null,
           null,
           null,
@@ -725,7 +747,7 @@
           null
         ]
       },
-      "C:/Users/andmi/CAMAAR/camaar/app/jobs/application_job.rb": {
+      "C:/Users/Mikhael/Pictures/CAMAAR/camaar/app/jobs/application_job.rb": {
         "lines": [
           0,
           null,
@@ -738,6 +760,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1752882803
+    "timestamp": 1753078873
   }
 }

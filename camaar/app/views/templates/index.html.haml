@@ -4,7 +4,7 @@
       .template-info
         %strong= template.nome
         %br
-        %span.semestre= template.data_versao&.strftime('%Y.%m') || 'semestre'
+        %span.semestre= template.data_versao&.strftime('%Y.%m') || ''
       .template-actions
         = link_to edit_template_path(template), class: 'btn-editar', title: 'Editar' do
           %i.icon{ 'data-nome' => 'Editar Template' } ✏️

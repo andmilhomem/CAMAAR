@@ -24,6 +24,8 @@ module ApplicationHelper
       "Gerenciamento - Templates"
     when new_template_path
       "Gerenciamento - Templates"
+    when new_formulario_path
+      "Gerenciamento - Avaliações"
     else
       "CAMAAR"
     end

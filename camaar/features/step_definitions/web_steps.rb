@@ -347,7 +347,7 @@ Dado("que nenhum formulário foi respondido") do
 end
 
 Então("devo requisitar o download do arquivo CSV correspondente") do
-  expect(page).to have_link(nil, href: resposta_formularios_path(form_id: @formulario.id))
+  expect(page).to have_link(nil, href: resposta_formulario_path(id: @formulario.id))
 end
 
 Dado("que o formulário da turma \"BANCO DE DADOS\" ainda não recebeu respostas") do

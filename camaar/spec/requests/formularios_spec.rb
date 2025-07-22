@@ -110,9 +110,9 @@ RSpec.describe "Formularios", type: :request do
         expect(Questao.last.formulario_id).to eq(Formulario.last.id)
       end
 
-      it 'redireciona para formularios_path com mensagem de sucesso' do
+      it 'redireciona para admin_path com mensagem de sucesso' do
         post "/formularios", params: { turma_ids: [turma.id], template_id: template.id }
-        expect(response).to redirect_to(formularios_path)
+        expect(response).to redirect_to(admin_path)
         expect(flash[:notice]).to be_present
       end
     end

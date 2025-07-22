@@ -79,4 +79,16 @@ class FormulariosController < ApplicationController
     end
     redirect_to admin_path, notice: "Formulário(s) criado(s) com sucesso!"
   end
+
+  private
+  
+  def formulario_params
+    params.require(:formulario).permit(
+      :turma_id,
+      questaos_attributes: [
+        :num_questao, :tipo, :enunciado,
+        opcaos_attributes: [:num_opcao, :texto_opcao]
+      ]
+    )
+  end
 end

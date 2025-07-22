@@ -1,30 +1,29 @@
-require 'csv'
+##
+# Controladora das ações da model RespostaFormulario
 
 class RespostaFormulariosController < ApplicationController
-  before_action :requerer_admin, only: :index
-  include FormulariosHelper
+  before_action :requerer_admin, only: [:index, :show]
 
+  ##
+  # Usuário precisa ser administrador
+  #
+  # Busca os formularios respondidos e renderiza a página resposta_formularios/index.html.haml
   def index
-    if params[:form_id].present? # Verifica se a requisição contém um form_id como parâmetro
-      form_id = params[:form_id]
-      respostas = RespostaFormulario.where :formulario_id => form_id
-      csv_result = CSV.generate do |csv|
-        csv << ["id","data_resposta","num_questao","texto_resposta"]
-        respostas.each do |rf|
-          rf.resposta_questaos.each do |rq|
-            csv << [rf.id,rf.data_resposta,rq.num_questao,rq.texto_resposta]
-          end
-        end
-      end
+    @formularios = Formulario.respondidos
+  end
 
-      request.format = :csv
-      respond_to do |format|
-        format.csv { send_data csv_result, :filename => (gera_nome_csv Formulario.find_by_id form_id) }
-      end 
-
-    else
-      @formularios = Formulario.respondidos
-    end
+  ##
+  # Usuário precisa ser administrador
+  #
+  # Gera um csv com as informações das respostas relacionadas ao formulario que foi selecionado
+  def show
+    formulario = Formulario.find_by_id params[:id]
+    respostas_csv_service = RespostaFormulariosCsvService.new(formulario)
+    csv_result = respostas_csv_service.get_arquivo_csv
+    request.format = :csv
+    respond_to do |format|
+      format.csv { send_data csv_result, :filename => (respostas_csv_service.get_nome_csv) }
+    end 
   end
 
   def new
@@ -69,10 +68,6 @@ class RespostaFormulariosController < ApplicationController
 
     end
 
-   # session[:formularios_respondidos] ||= []
-   # session[:formularios_respondidos] << @formulario.id
-   # session[:formularios_respondidos].uniq!
-
     redirect_to formularios_path, notice: "Resposta enviada com sucesso!"
   rescue => e
     logger.error "[RESPOSTA] erro ao salvar: #{e.class} #{e.message}"
@@ -81,10 +76,6 @@ class RespostaFormulariosController < ApplicationController
   end
 
   private
-
-  def gera_nome_csv formulario
-    formulario ? "#{formulario.turma.disciplina.nome}-#{get_nome_professor formulario.turma}.csv" : "N/A.csv"
-  end
 
   def resposta_formulario_params
     # Permite o formulário e o hash de respostas diretamente

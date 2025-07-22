@@ -5,4 +5,9 @@ class Turma < ApplicationRecord
   validates :codigo, presence: true
   validates :semestre, presence: true
   validates :horario, presence: true
+
+  def nome_professor
+    professor = usuarios.find_by :ocupacao => "docente"
+    professor ? professor.nome : "N/A"
+  end
 end

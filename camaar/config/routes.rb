@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   # Rotas relacionadas à manipulação direta de recursos
   resources :formularios, only: [:index, :new, :create] # Usar index para listar formulários não respondidos (usar usuario_id em session para filtrar) 
-  resources :resposta_formularios, only: [:index, :new, :create] # Usar index para listar formulários com resposta (quando não houver parâmetro formulario_id) e para gerar CSV com todos os resultados de um formulário (passar formulario_id como parâmetro quando clicar em card)
+  resources :resposta_formularios, only: [:index, :new, :create, :show] # Usar :index para listar formulários com resposta e :show para gerar CSV com todos os resultados de um formulário (passar formulario_id como parâmetro quando clicar em card)
   resources :templates, only: [:index, :new, :create, :edit, :update, :destroy]
 
   # Define a página inicial

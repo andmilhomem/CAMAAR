@@ -81,6 +81,16 @@ class AdminController < ApplicationController
 
     dados.each do |entrada|
 
+      # Encontrar disciplina
+      disciplina = Disciplina.find_by!(codigo: entrada["code"])
+
+      # Encontrar turma associada a essa disciplina
+      turma = Turma.find_by!(
+        codigo: entrada["classCode"],
+        semestre: entrada["semester"],
+        disciplina: disciplina
+      )
+
       discentes = entrada["discente"] || []
 
       discentes.each do |discente|
@@ -98,6 +108,9 @@ class AdminController < ApplicationController
           password: senha_padrao
         )
         usuario.save!
+        
+        # Matricular o usuário na turma
+        usuario.turmas << turma unless usuario.turmas.include?(turma)
 
         token = usuario.signed_id(purpose: "password_reset", expires_in: 60.minutes)
 
@@ -122,6 +135,10 @@ class AdminController < ApplicationController
           password: senha_padrao
         )
         usuario.save!
+
+        # Associar o docente à turma
+        usuario.turmas << turma unless usuario.turmas.include?(turma)
+
         UsuarioMailer.with(usuario: usuario, senha_padrao: senha_padrao).enviar_senha.deliver_later
       end
     end

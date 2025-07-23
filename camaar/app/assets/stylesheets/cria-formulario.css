@@ -9,7 +9,7 @@ body.formularios-new {
     background-color: #F3F4F6;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; 
     min-height: 100vh;
 }
 
@@ -23,6 +23,7 @@ body.formularios-new {
         justify-content: space-between;
         align-items: center;
         padding: 17px;
+        background-color: white; 
     }
 
     .templateSelector {

@@ -78,9 +78,9 @@ RSpec.describe "Formularios", type: :request do
       it "exibe templates disponíveis em um dropdown" do
         get "/formularios/new"
         expect(response.body).to include "<select"
-        expect(response.body).to match /\<option.*\>#{template.nome}/
-        expect(response.body).to match /\<option.*\>#{template2.nome}/
-        expect(response.body).to match /\<option.*\>#{template3.nome}/
+        expect(response.body).to match (/\<option.*\>#{template.nome}/)
+        expect(response.body).to match (/\<option.*\>#{template2.nome}/)
+        expect(response.body).to match (/\<option.*\>#{template3.nome}/)
       end
     end
   end

@@ -9,7 +9,7 @@
 
   <meta name="keywords" content="ruby,class,AdminController">
 
-    <meta name="description" content="Documentation for the AdminController class">
+    <meta name="description" content="class AdminController: Controlador responsável por renderizar a tela de Gerenciamento (método index). Essa tela apresenta ao usuário com perfil de administrador as opções de">
 
 
 <script type="text/javascript">
@@ -104,6 +104,14 @@
 
   <section class="description">
     
+<p>Controlador responsável por renderizar a tela de Gerenciamento (método index).</p>
+
+<p>Essa tela apresenta ao usuário com perfil de administrador as opções de ações disponíveis.</p>
+
+<p>Controlador também é responsável por importar os dados do JSON para a base de dados (método <a href="AdminController.html#method-i-importar_dados"><code>importar_dados</code></a>).</p>
+
+<p>Controlador conta com diversos métodos auxiliares aos principais.</p>
+
   </section>
 
   <section id="5Buntitled-5D" class="documentation-section anchor-link">
@@ -135,21 +143,12 @@
 
         <div class="method-description">
           <div class="method-source-code" id="importar_dados-source">
-            <pre><span class="ruby-comment"># File app/controllers/admin_controller.rb, line 8</span>
+            <pre><span class="ruby-comment"># File app/controllers/admin_controller.rb, line 25</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">importar_dados</span>
 
   <span class="ruby-comment"># 1) Os arquivos com dados estão disponíveis?</span>
   
-  <span class="ruby-identifier">caminho_base</span> = <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;..&#39;</span>).<span class="ruby-identifier">cleanpath</span>  <span class="ruby-comment"># Obtém path do diretório em que localizados os arquivos (um nível acima da raiz do projeto)</span>
-
-  <span class="ruby-identifier">caminho_arquivo_membros</span> = <span class="ruby-identifier">caminho_base</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;class_members.json&#39;</span>) <span class="ruby-comment"># Monta o path do arquivo de membros de turmas</span>
-  <span class="ruby-identifier">caminho_arquivo_disciplinas</span> =  <span class="ruby-identifier">caminho_base</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;classes.json&#39;</span>) <span class="ruby-comment"># Monta o path do arquivo de disciplinas</span>
-  
-  <span class="ruby-identifier">caminhos_arquivos</span> = [<span class="ruby-identifier">caminho_arquivo_membros</span>, <span class="ruby-identifier">caminho_arquivo_disciplinas</span>]
-
-  <span class="ruby-identifier">arquivos_existem</span> = <span class="ruby-identifier">caminhos_arquivos</span>.<span class="ruby-identifier">all?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">arquivo</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">arquivo</span>) } <span class="ruby-comment"># Checa se os arquivos existem</span>
-
-  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">arquivos_existem</span>
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">arquivos_existem?</span>
     <span class="ruby-identifier">flash</span>[<span class="ruby-value">:alert</span>] = <span class="ruby-string">&quot;Dados indisponíveis no momento! Tente novamente mais tarde ou entre em contato com o suporte técnico.&quot;</span>
     <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">admin_path</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">return</span>
   <span class="ruby-keyword">end</span>
@@ -157,31 +156,34 @@
   <span class="ruby-comment"># 2) O usuário já autorizou a sobrescrita de dados (parâmetro sobrescrever: true)?</span>
   
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:sobrescrever</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;true&quot;</span>
-    <span class="ruby-constant">Disciplina</span>.<span class="ruby-identifier">destroy_all</span>
-    <span class="ruby-constant">Usuario</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">e_admin:</span> <span class="ruby-keyword">false</span>).<span class="ruby-identifier">destroy_all</span>
-
-    <span class="ruby-identifier">criar_disciplinas_turmas</span>(<span class="ruby-identifier">caminho_arquivo_disciplinas</span>)
-    <span class="ruby-identifier">criar_usuarios</span>(<span class="ruby-identifier">caminho_arquivo_membros</span>)
-
-    <span class="ruby-constant">ImportacaoDado</span>.<span class="ruby-identifier">create!</span>(<span class="ruby-value">usuario:</span> <span class="ruby-identifier">usuario_atual</span>)
-
-    <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">admin_path</span>, <span class="ruby-value">notice:</span> <span class="ruby-string">&quot;Dados atualizados com sucesso!&quot;</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">return</span>
+    <span class="ruby-identifier">atualiza_dados</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">return</span>
 
   <span class="ruby-comment"># 3) Já existem dados de disciplinas, turmas e discentes no banco?</span>
   
   <span class="ruby-keyword">elsif</span> <span class="ruby-constant">ImportacaoDado</span>.<span class="ruby-identifier">exists?</span>
     <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">admin_path</span>(<span class="ruby-value">confirmacao:</span> <span class="ruby-keyword">true</span>) <span class="ruby-keyword">and</span> <span class="ruby-keyword">return</span>
 
+  <span class="ruby-comment"># 4) Nunca houve importação de dados.</span>
   <span class="ruby-keyword">else</span>
-    <span class="ruby-identifier">criar_disciplinas_turmas</span>(<span class="ruby-identifier">caminho_arquivo_disciplinas</span>)
-    <span class="ruby-identifier">criar_usuarios</span>(<span class="ruby-identifier">caminho_arquivo_membros</span>)
-    <span class="ruby-constant">ImportacaoDado</span>.<span class="ruby-identifier">create!</span>(<span class="ruby-value">usuario:</span> <span class="ruby-identifier">usuario_atual</span>)
-    
+    <span class="ruby-identifier">criar_disciplinas_turmas</span>(<span class="ruby-ivar">@caminho_arquivo_disciplinas</span>)
+    <span class="ruby-identifier">criar_usuarios</span>(<span class="ruby-ivar">@caminho_arquivo_membros</span>)
+    <span class="ruby-constant">ImportacaoDado</span>.<span class="ruby-identifier">create!</span>(<span class="ruby-value">usuario:</span> <span class="ruby-identifier">usuario_atual</span>)   
     <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">admin_path</span>, <span class="ruby-value">notice:</span> <span class="ruby-string">&quot;Dados importados com sucesso!&quot;</span> <span class="ruby-keyword">and</span> <span class="ruby-keyword">return</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
+          <p>Processa requisição de importação de dados.</p>
+
+<p>@param <a href=":sobrescrever">params</a> [String] Opcional. Deve ser “true” para atualizar a base de dados</p>
+
+<p>@param <a href=":confirmacao">params</a> [String] Opcional. Deve ser “true” para renderizar tela de confirmação de atualização</p>
+
+<p>@note Possui como possíveis efeitos colaterais:</p>
+
+<pre>1. acréscimo e deleção de informações da base de dados (Usuario, Disciplina, Turma)
+2. renderização de tela de confirmação de atualização de dados
+3. envio de emails com senha provisória e token para usuários
+4. apresentação de mensagens sobre indisponibilidade de dados e sucesso na importação de dados</pre>
         </div>
 
 
@@ -205,12 +207,14 @@
 
         <div class="method-description">
           <div class="method-source-code" id="index-source">
-            <pre><span class="ruby-comment"># File app/controllers/admin_controller.rb, line 4</span>
+            <pre><span class="ruby-comment"># File app/controllers/admin_controller.rb, line 12</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">index</span>
   <span class="ruby-identifier">render</span> <span class="ruby-value">:index</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
+          <p>Renderiza tela de Gerenciamento, com opções de ação para o administrador.</p>
+
+<pre>@note Não utiliza parâmetros, não retorna objetos, nem produz efeitos colaterais.</pre>
         </div>
 
 

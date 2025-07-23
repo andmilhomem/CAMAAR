@@ -139,7 +139,7 @@
 
         <div class="method-description">
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File app/controllers/resposta_formularios_controller.rb, line 35</span>
+            <pre><span class="ruby-comment"># File app/controllers/resposta_formularios_controller.rb, line 53</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create</span>
   <span class="ruby-identifier">permitted</span>      = <span class="ruby-identifier">resposta_formulario_params</span>
   <span class="ruby-ivar">@formulario</span>    = <span class="ruby-constant">Formulario</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">permitted</span>[<span class="ruby-value">:formulario_id</span>])
@@ -183,7 +183,28 @@
   <span class="ruby-identifier">render</span> <span class="ruby-value">:new</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
+          <p>Registra no banco de dados as respostas dadas pelo usuário a um formulário.</p>
+
+<p>Este método realiza:</p>
+<ul><li>
+<p>Busca do formulário e suas questões.</p>
+</li><li>
+<p>Validação para garantir que todas as respostas foram fornecidas e não estão em branco.</p>
+</li><li>
+<p>Criação, em transação, da resposta do formulário e das respostas individuais das questões.</p>
+</li><li>
+<p>Associação do formulário respondido ao usuário logado.</p>
+</li></ul>
+
+<p>@param resposta_formulario_params [ActionController::Parameters]</p>
+
+<pre>Parâmetros permitidos vindos da requisição, contendo:
+- `:formulario_id` [Integer] ID do formulário respondido.
+- `:respostas` [Hash] Hash de respostas, cujas chaves são IDs das questões e valores são strings com as respostas.</pre>
+
+<p>@return [void]</p>
+
+<pre>Renderiza a view :new se houver campos faltando, ou redireciona para a tela Avaliações (em caso de sucesso).</pre>
         </div>
 
 
@@ -238,14 +259,16 @@
 
         <div class="method-description">
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/controllers/resposta_formularios_controller.rb, line 29</span>
+            <pre><span class="ruby-comment"># File app/controllers/resposta_formularios_controller.rb, line 32</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">new</span>
   <span class="ruby-ivar">@formulario</span> = <span class="ruby-constant">Formulario</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:formulario_id</span>])
   <span class="ruby-comment"># Carrega as questões associadas a esse formulário</span>
   <span class="ruby-ivar">@questaos</span>   = <span class="ruby-ivar">@formulario</span>.<span class="ruby-identifier">questaos</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
+          <p>Renderiza tela para usuário responder a um formulário</p>
+
+<p>@param <a href=":formulario_id">params</a> [Integer] ID do formulário que o usuário deseja responder</p>
         </div>
 
 

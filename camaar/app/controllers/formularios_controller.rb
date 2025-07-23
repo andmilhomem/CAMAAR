@@ -1,12 +1,12 @@
 class FormulariosController < ApplicationController
   before_action :requerer_admin, only: [:new, :create]
 
+  # Exibe todos os formulários pendentes de resposta para determinado usuário.
+  # @param session[:usuario_id] Integer ID do usuário logado
+  # @note Renderiza view com todos os formulários pendentes de resposta para o usuário logado.
   def index
     usuario      = Usuario.find(session[:usuario_id])
     turmas_ids   = usuario.turmas.ids
-
-    # lê do session a lista de formulários já respondidos por este usuário
-    #responded_ids = session[:formularios_respondidos] || []
 
     # Pega da tabela associativa todos os formulários já respondidos pelo usuário
     responded_ids = usuario.formularios.ids

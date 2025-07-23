@@ -197,13 +197,10 @@
 
         <div class="method-description">
           <div class="method-source-code" id="index-source">
-            <pre><span class="ruby-comment"># File app/controllers/formularios_controller.rb, line 4</span>
+            <pre><span class="ruby-comment"># File app/controllers/formularios_controller.rb, line 7</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">index</span>
   <span class="ruby-identifier">usuario</span>      = <span class="ruby-constant">Usuario</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-value">:usuario_id</span>])
   <span class="ruby-identifier">turmas_ids</span>   = <span class="ruby-identifier">usuario</span>.<span class="ruby-identifier">turmas</span>.<span class="ruby-identifier">ids</span>
-
-  <span class="ruby-comment"># lê do session a lista de formulários já respondidos por este usuário</span>
-  <span class="ruby-comment">#responded_ids = session[:formularios_respondidos] || []</span>
 
   <span class="ruby-comment"># Pega da tabela associativa todos os formulários já respondidos pelo usuário</span>
   <span class="ruby-identifier">responded_ids</span> = <span class="ruby-identifier">usuario</span>.<span class="ruby-identifier">formularios</span>.<span class="ruby-identifier">ids</span>
@@ -215,7 +212,7 @@
   <span class="ruby-ivar">@tem_formularios</span> = <span class="ruby-ivar">@formularios</span>.<span class="ruby-identifier">any?</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
-          
+          <p>Exibe todos os formulários pendentes de resposta para determinado usuário. @param <a href=":usuario_id">session</a> Integer ID do usuário logado @note Renderiza view com todos os formulários pendentes de resposta para o usuário logado.</p>
         </div>
 
 

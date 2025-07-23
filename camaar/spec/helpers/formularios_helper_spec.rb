@@ -11,11 +11,15 @@ require 'rails_helper'
 #   end
 # end
 # 
-
-=begin Testes nativos do RSpec
-
-RSpec.describe FormulariosHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe FormulariosHelper, type: :helper do
+  describe "método get_nome_professor" do
+    before do
+      @docente = create(:usuario, :docente)
+      @turma = create(:turma)
+      @docente.turmas << @turma
+    end
+    it "retorna nome do docente associado à turma" do
+      expect(helper.get_nome_professor(@turma)).to eq(@docente.nome)
+    end
+  end
 end
-
-=end

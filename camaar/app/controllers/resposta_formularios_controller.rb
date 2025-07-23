@@ -26,12 +26,30 @@ class RespostaFormulariosController < ApplicationController
     end 
   end
 
+  # Renderiza tela para usuário responder a um formulário
+  # 
+  # @param params[:formulario_id] [Integer] ID do formulário que o usuário deseja responder
   def new
     @formulario = Formulario.find(params[:formulario_id])
     # Carrega as questões associadas a esse formulário
     @questaos   = @formulario.questaos
   end
 
+  # Registra no banco de dados as respostas dadas pelo usuário a um formulário.
+  #
+  # Este método realiza:
+  # - Busca do formulário e suas questões.
+  # - Validação para garantir que todas as respostas foram fornecidas e não estão em branco.
+  # - Criação, em transação, da resposta do formulário e das respostas individuais das questões.
+  # - Associação do formulário respondido ao usuário logado.
+  #
+  # @param resposta_formulario_params [ActionController::Parameters]
+  #   Parâmetros permitidos vindos da requisição, contendo:
+  #   - `:formulario_id` [Integer] ID do formulário respondido.
+  #   - `:respostas` [Hash] Hash de respostas, cujas chaves são IDs das questões e valores são strings com as respostas.
+  #
+  # @return [void]
+  #   Renderiza a view :new se houver campos faltando, ou redireciona para a tela Avaliações (em caso de sucesso).
   def create
     permitted      = resposta_formulario_params
     @formulario    = Formulario.find(permitted[:formulario_id])

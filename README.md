@@ -28,7 +28,7 @@ Para viabilizar a realização de testes de interface, podem ser utilizados os s
 | Ordinário com senha definitiva  | teste@unb.br            | Senh@123     |
 
 ## Papéis
-Nas Sprint 1 e 2, o papel de Scrum Master ficou a cargo de André e o papel de Product Owner sob responsabilidade de Paulo. Além disso, cada integrante ficou responsável por um grupo de histórias de usuário e, assim, pelos requisitos a elas correspondentes.
+Nas Sprint 1, 2 e 3, o papel de Scrum Master ficou a cargo de André e o papel de Product Owner sob responsabilidade de Paulo. Além disso, cada integrante ficou responsável por um grupo de histórias de usuário e, assim, pelos requisitos a elas correspondentes.
 
 ## Funcionalidades
 As funcionalidades desenvolvidas no projeto correspondem a histórias de usuário especificadas nas issues do repositório original (https://github.com/EngSwCIC/CAMAAR/issues). Abaixo, listam-se as histórias planejadas, com uma breve descrição, a indicação do integrante responsável e do esforço necessário, bem como a numeração que a issue respectiva assumiu.
@@ -49,10 +49,10 @@ As funcionalidades desenvolvidas no projeto correspondem a histórias de usuári
 |  17   | Visualização dos templates criados (#111)            | Mikhael     |   3     |
 |  18   | Edição e deleção de templates (#112)                 | Mikhael     |   5     |
 
-Ao final da Sprint-2, todas as issues foram resolvidas, à exceção da issue #11 (Criar formulário de avaliação), que será tratada na Sprint-3.
+Ao final da Sprint-3, todas as issues foram resolvidas.
 
 ## Política de branching
-Para cada sprint foi criada uma branch (sprint-1, sprint-2 e sprint-3). Para cada funcionalidade ou tarefa relevante desenvolvida na sprint foi criada uma branch específica (ex.: estrutura-projeto, cenarios-bdd). Para a implementação das histórias de usuário indicadas acima, foram criadas as seguintes branches: feature/dados (André - issues 6, 8 e 14), feature/login (Matheus - issues 12 e 13), feature/template (Mikhael - issues 10, 17 e 18), feature/formulario (Aquila - issues 7 e 15), feature/resposta (Paulo - issues 9, 11 e 16). Quando concluídas as tarefas relativas a determinada branch, ela foi fundida (merge) com a branch da sprint correspondente. Ao final de cada sprint, foi feito pull request da branch da sprint para a branch main do repositório original.
+Para cada sprint foi criada uma branch (sprint-1, sprint-2 e sprint-3). Para cada funcionalidade ou tarefa relevante desenvolvida na sprint foi criada uma branch específica (ex.: estrutura-projeto, cenarios-bdd). Na sprint-2, para a implementação das histórias de usuário indicadas acima, foram criadas as seguintes branches: feature/dados (André - issues 6, 8 e 14), feature/login (Matheus - issues 12 e 13), feature/template (Mikhael - issues 10, 17 e 18), feature/formulario (Aquila - issues 7 e 15), feature/resposta (Paulo - issues 9, 11 e 16). Na sprint-3, em caráter complementar, foram criadas as seguintes branches: feature/formulario-2, feature/login-2, feature/template-2. Quando concluídas as tarefas relativas a determinada branch, ela foi fundida (merge) com a branch da sprint correspondente. Ao final de cada sprint, foi feito pull request da branch da sprint para a branch main do repositório original.
 
 ## Histórico de atividades
 ### Sprint 1 - Parte 1 (Cenários BDD)
@@ -67,6 +67,32 @@ Na sprint 2, foram implementadas as histórias de usuário descritas acima. Alé
 Para organizar o trabalho, criou-se um projeto no GitHub (https://github.com/users/andmilhomem/projects/3/views/1) e utilizou-se o Kanban como ferramenta de monitoramento da evolução das issues. Em 03/07/2025, entre 20h e 21h30, realizou-se reunião entre os integrantes do grupo para discutir a estrutura geral do projeto e decidir como cada um deveria integrar suas contribuições ao código. 
 
 Após a reunião, cada integrante implementou o respectivo grupo de histórias de usuário (com os testes RSpec correspondentes) em branches específicas (feature/*). Por fim, essas branches foram revisadas e integradas à branch sprint-2. O resultado final é aprovado pela totalidade dos 46 testes RSpec e por 27 dos 31 testes Cucumber criados (falham apenas os testes relativos à issue #11, que será tratada na Sprint-3).
+
+### Sprint 3 - Refatoração, documentação e complementação (Rubycritic, SimpleCov, RDoc)
+Na sprint-3, cada integrante ficou responsável por descrever, por meio de comentários ao código, os métodos criados por si, para viabilizar a geração de documentação pela gem RDoc. Além disso, submeteu-se o código da sprint-2 à avaliação das ferramentas Rubycritic e SimpleCov, a fim de identificar oportunidades, respectivamente, de refatoração de controladores e de ampliação da cobertura de testes.
+
+A ferramenta Rubycritic identificou dois controladores com complexidade/método superior a 20: AdminController e RespostaFormulariosController. O TemplatesController também foi apontado como componente de alta complexidade, embora a complexidade/método estivesse abaixo do limite (9,7). A ferramenta SimpleCov indicou cobertura de testes abaixo de 90% para os seguintes componentes: TemplatesController, ApplicationController e ApplicationHelper. Os integrantes que, na sprint-2, haviam originalmente implementado as funcionalidades relacionadas a esses controladores ficaram, na sprint-3, responsáveis pela refatoração do código correspondente e pela ampliação da cobertura dos testes respectivos. 
+
+A tabela comparativa abaixo descreve as alterações realizadas, na sprint-3, a partir das indicações das ferramentas Rubycritic e SimpleCov:
+
+|             Classe            | Sprint | Complexidade/método | Cobertura de testes |
+|-------------------------------|--------|---------------------|---------------------|
+| AdminController               |   2    |        26,60        |                     |
+| AdminController               |   3    |        15,80        |                     |
+| ApplicationController         |   2    |                     |       85,00%        |
+| ApplicationController         |   3    |                     |      100,00%        |
+| RespostaFormulariosController |   2    |        25,00        |                     |
+| RespostaFormulariosController |   3    |        17,80        |                     |
+| TemplatesController           |   2    |         9,70        |       30,56%        |
+| TemplatesController           |   3    |         4,20        |       97,78%        |
+| ApplicationHelper             |   2    |                     |       60,00%        |
+| ApplicationHelper             |   3    |                     |       93,75%        |
+
+Para melhor visualização das diferenças de código entre a sprint-2 e a sprint-3, sugere-se a utilização da ferramenta de comparação de branches do GitHub: https://github.com/andmilhomem/CAMAAR/compare/sprint-3..sprint-2. 
+
+Ao final da sprint-2, visualizava-se o seguinte panorama em relação aos testes: o resultado final era aprovado pela totalidade dos 46 testes RSpec e por 27 dos 31 testes Cucumber criados. Já ao final na sprint-3, observa-se o seguinte cenário: a cobertura do RSpec subiu para 86 testes (97.61%); a cobertura do Cucumber se manteve em 31 testes; o código é aprovado em todos os testes.
+
+Por fim, registre-se que, na sprint-3, também se implementou a única funcionalidade pendente de implementação ao final da sprint-2: "Criar formulário de avaliação (#103)" (issue #11). 
 
 ## Funcionalidades implementadas
 Descrevem-se abaixo, a partir das rotas correpondentes, as principais funcionalidades da aplicação.
@@ -137,9 +163,14 @@ Função - Envia formulário para turmas
 Origem - Tela de envio de formulários do administrador 
 
 #### get /resposta_formularios (RespostaFormulariosController#index)
-Função - Apresenta todos os formulários que já foram respondidos ou, quando informado como parâmetro o número identificador de um formulário específico, gera um CSV com o conteúdo de todas as respostas correspondentes
+Função - Apresenta todos os formulários que já foram respondidos 
 
-Origem - Tela de gerenciamento do administrador ou, no caso do CSV, tela de resultados
+Origem - Tela de gerenciamento do administrador 
+
+#### get /resposta_formularios/:id (RespostaFormulariosController#show)
+Função - Gera um CSV com o conteúdo de todas as respostas correspondentes ao formulário indicado
+
+Origem - Tela de resultados
 
 #### get /resposta_formularios/new (RespostaFormulariosController#new)
 Função - Apresenta tela de resposta a formulário
